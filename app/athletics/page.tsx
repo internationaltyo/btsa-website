@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import { SPORT_INFO, type SportInfo } from './sportsInfo'
 
 // Barcelona palette
 const C = {
@@ -66,6 +67,7 @@ export default function AthleticsPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [registrations, setRegistrations] = useState<Registration[]>([])
+  const [modal, setModal] = useState<SportInfo | null>(null)
 
   const birthDate = birthDay && birthMonth && birthYear2 ? `${birthYear2}-${birthMonth.padStart(2,'0')}-${birthDay.padStart(2,'0')}` : ''
   const birthYear = birthYear2 ? parseInt(birthYear2) : null
@@ -416,7 +418,7 @@ export default function AthleticsPage() {
                             borderBottom: `1px solid ${C.border}`,
                           }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: names.length > 0 ? 10 : 0 }}>
-                              <div>
+                              <div style={{ flex: 1 }}>
                                 <span style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 15, color: C.text }}>
                                   {sport.en}
                                 </span>
@@ -424,11 +426,22 @@ export default function AthleticsPage() {
                                   {sport.ta}
                                 </span>
                               </div>
-                              {names.length > 0 && (
-                                <span style={{ background: C.gold, color: C.dark, padding: '2px 10px', borderRadius: 2, fontFamily: 'Bebas Neue, sans-serif', fontSize: 14, fontWeight: 700 }}>
-                                  {names.length}
-                                </span>
-                              )}
+                              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                                {SPORT_INFO[sport.en] && (
+                                  <button onClick={() => setModal(SPORT_INFO[sport.en])} style={{
+                                    background: C.dark, color: C.white, border: 'none', borderRadius: 3,
+                                    padding: '4px 12px', fontFamily: 'Rajdhani, sans-serif', fontWeight: 700,
+                                    fontSize: 11, letterSpacing: 1, cursor: 'pointer', whiteSpace: 'nowrap',
+                                  }}>
+                                    ℹ️ MEER INFO
+                                  </button>
+                                )}
+                                {names.length > 0 && (
+                                  <span style={{ background: C.gold, color: C.dark, padding: '4px 10px', borderRadius: 2, fontFamily: 'Bebas Neue, sans-serif', fontSize: 14 }}>
+                                    {names.length}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                             {names.length > 0 && (
                               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -457,6 +470,56 @@ export default function AthleticsPage() {
           )}
         </div>
       </div>
+
+      {/* ── SPORT INFO MODAL ── */}
+      {modal && (
+        <div onClick={() => setModal(null)} style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 1000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24,
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            background: C.white, maxWidth: 680, width: '100%', borderRadius: 6,
+            overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
+          }}>
+            {/* SVG illustration */}
+            <div style={{ background: C.dark, height: 200, position: 'relative', overflow: 'hidden' }}>
+              {modal.svg}
+              <button onClick={() => setModal(null)} style={{
+                position: 'absolute', top: 12, right: 12, background: 'rgba(255,255,255,0.15)',
+                border: 'none', color: C.white, width: 32, height: 32, borderRadius: '50%',
+                cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>✕</button>
+            </div>
+            {/* Content */}
+            <div style={{ padding: '28px 32px 32px' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16 }}>
+                <div>
+                  <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 32, color: C.text, margin: 0, lineHeight: 1 }}>{modal.en}</h2>
+                  <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 14, color: C.muted, marginTop: 4 }}>{modal.ta}</div>
+                </div>
+                <div style={{ background: C.red, color: C.white, padding: '6px 14px', borderRadius: 3, fontFamily: 'Bebas Neue, sans-serif', fontSize: 13, letterSpacing: 1, flexShrink: 0 }}>
+                  BTSA ATHLETICS
+                </div>
+              </div>
+              <div style={{ borderTop: `3px solid ${C.red}`, paddingTop: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div>
+                  <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 10, letterSpacing: 2, color: C.red, marginBottom: 6 }}>NEDERLAND</div>
+                  <p style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 500, fontSize: 15, color: C.text, lineHeight: 1.6, margin: 0 }}>{modal.descNl}</p>
+                </div>
+                <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 14 }}>
+                  <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 10, letterSpacing: 2, color: C.blue, marginBottom: 6 }}>தமிழ்</div>
+                  <p style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 500, fontSize: 15, color: C.text, lineHeight: 1.6, margin: 0 }}>{modal.descTa}</p>
+                </div>
+              </div>
+              <button onClick={() => setModal(null)} style={{
+                marginTop: 24, width: '100%', background: C.dark, color: C.white,
+                padding: '13px', fontFamily: 'Bebas Neue, sans-serif', fontSize: 16, letterSpacing: 2,
+                border: 'none', borderRadius: 4, cursor: 'pointer',
+              }}>SLUITEN</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
