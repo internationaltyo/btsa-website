@@ -261,7 +261,7 @@ export default function HomePage() {
         {/* Carousel wrapper */}
         <div style={{ position: 'relative' }}>
           {/* Scroll container */}
-          <div ref={photosRef} style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingLeft: 40, paddingRight: 80, scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}>
+          <div ref={photosRef} style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingLeft: 56, paddingRight: 56, scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}>
             {[
               { label: 'Football', sport: 'football', color: 'linear-gradient(135deg, #1a0a0a, #4a0a0a)', emoji: '⚽' },
               { label: 'Cricket', sport: 'cricket', color: 'linear-gradient(135deg, #1a120a, #4a2a0a)', emoji: '🏏' },
@@ -295,7 +295,7 @@ export default function HomePage() {
           <button
             onClick={() => scrollPhotos('right')}
             style={{
-              position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
+              position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)',
               width: 44, height: 44, borderRadius: '50%',
               background: '#fff', border: '2px solid #ddd',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -309,7 +309,7 @@ export default function HomePage() {
           <button
             onClick={() => scrollPhotos('left')}
             style={{
-              position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)',
+              position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)',
               width: 44, height: 44, borderRadius: '50%',
               background: '#fff', border: '2px solid #ddd',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
