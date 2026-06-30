@@ -198,8 +198,9 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── MEMBERSHIP BANNER (Barcelona-stijl) ── */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 40px 0' }}>
+      {/* ── MEMBERSHIP BANNER (Barcelona-stijl: witte achtergrond, donkerblauwe banner erop) ── */}
+      <div style={{ background: '#fff', padding: '40px 0' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px' }}>
         <div style={{
           position: 'relative', borderRadius: 16, overflow: 'hidden',
           background: 'linear-gradient(135deg, #0a0e20 0%, #111630 50%, #0d1128 100%)',
@@ -241,6 +242,9 @@ export default function HomePage() {
             <Image src="/btsa-logo.png" alt="BTSA" width={140} height={140} style={{ borderRadius: '50%', opacity: 0.7, filter: 'drop-shadow(0 0 24px rgba(245,166,35,0.3))' }} />
           </div>
         </div>
+      </div>
+
+      </div>
       </div>
 
       {/* ── MAIN CONTENT: News feed + Sidebar ── */}
