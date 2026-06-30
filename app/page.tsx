@@ -252,6 +252,55 @@ export default function HomePage() {
       </div>
       </div>
 
+      {/* ── TROPHIES (100% Barcelona stijl) ── */}
+      <div style={{ background: '#0D1128', padding: '48px 40px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+          {[
+            { label: 'Trofee 1', icon: '🏆', number: '—', unit: 'TITELS' },
+            { label: 'Trofee 2', icon: '🥇', number: '—', unit: 'TITELS' },
+            { label: 'Trofee 3', icon: '🏅', number: '—', unit: 'TITELS' },
+            { label: 'Trofee 4', icon: '🏆', number: '—', unit: 'TITELS' },
+          ].map((t, i) => (
+            <div key={i} style={{
+              position: 'relative', overflow: 'hidden', borderRadius: 8,
+              background: '#0a0d1e',
+              padding: '20px 18px',
+              display: 'flex', alignItems: 'center', gap: 12,
+              border: '1px solid #1e2444',
+            }}>
+              {/* Diagonale streepjes achtergrond — exact Barcelona stijl */}
+              <div style={{
+                position: 'absolute', inset: 0, zIndex: 0,
+                backgroundImage: `repeating-linear-gradient(
+                  120deg,
+                  transparent,
+                  transparent 8px,
+                  rgba(165,0,68,0.18) 8px,
+                  rgba(165,0,68,0.18) 10px,
+                  transparent 10px,
+                  transparent 18px,
+                  rgba(0,68,148,0.18) 18px,
+                  rgba(0,68,148,0.18) 20px
+                )`,
+              }} />
+              {/* Label links */}
+              <div style={{ position: 'relative', zIndex: 1, minWidth: 70 }}>
+                <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 11, color: '#aaa', letterSpacing: 0.5, lineHeight: 1.3 }}>{t.label}</div>
+              </div>
+              {/* Trofee icoon + nummer */}
+              <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: 28 }}>{t.icon}</span>
+                <span style={{ fontFamily: 'Bebas Neue', fontSize: 52, color: '#F5A623', lineHeight: 1 }}>{t.number}</span>
+              </div>
+              {/* Unit rechts */}
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#fff', letterSpacing: 1 }}>{t.unit}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ── BTSA PHOTOS (Barcelona Stories stijl) ── */}
       <div style={{ background: '#fff', padding: '48px 0 56px' }}>
         {/* Titel gecentreerd */}
