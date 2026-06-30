@@ -3,297 +3,321 @@ export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
 
 const sports = [
-  { slug: 'football',   label: 'Football',   sub: 'Competitie & Bekers' },
-  { slug: 'cricket',    label: 'Cricket',     sub: 'T20 & ODI Formaat' },
-  { slug: 'volleyball', label: 'Volleyball',  sub: 'Indoor & Zaal' },
-  { slug: 'athletics',  label: 'Athletics',   sub: 'Registratie Open' },
+  { slug: 'football',   label: 'Football',   emoji: '⚽' },
+  { slug: 'cricket',    label: 'Cricket',     emoji: '🏏' },
+  { slug: 'volleyball', label: 'Volleyball',  emoji: '🏐' },
+  { slug: 'athletics',  label: 'Athletics',   emoji: '🏃' },
+]
+
+const navLinks = [
+  { label: 'Football',   href: '/football' },
+  { label: 'Cricket',    href: '/cricket' },
+  { label: 'Volleyball', href: '/volleyball' },
+  { label: 'Athletics',  href: '/athletics' },
+  { label: 'Rankings',   href: '/football/rankings' },
 ]
 
 export default function HomePage() {
-  const [recentMatches, setRecentMatches] = useState<any[]>([])
-  const [rankings, setRankings] = useState<any[]>([])
+  const [matches, setMatches] = useState<any[]>([])
+  const [tournaments, setTournaments] = useState<any[]>([])
+  const [clubs, setClubs] = useState<any[]>([])
+  const [activeNav, setActiveNav] = useState<string | null>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    supabase.from('tournament_matches').select('*').order('match_date', { ascending: false }).limit(6).then(({ data }) => setRecentMatches(data ?? []))
-    supabase.from('global_team_rankings').select('*').order('global_rank', { ascending: true }).limit(5).then(({ data }) => setRankings(data ?? []))
+    supabase.from('tournament_matches').select('*').order('match_date', { ascending: false }).limit(8).then(({ data }) => setMatches(data ?? []))
+    supabase.from('tournaments').select('*, clubs!organizer_club_id(name)').eq('is_published', true).order('start_date', { ascending: false }).limit(8).then(({ data }) => setTournaments(data ?? []))
+    supabase.from('clubs').select('id,name,sport').eq('is_active', true).order('name').limit(12).then(({ data }) => setClubs(data ?? []))
   }, [])
 
-  return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
+  const liveMatches = matches.filter(m => m.is_live)
+  const recentMatches = matches.filter(m => m.is_played)
+  const upcomingMatches = matches.filter(m => !m.is_played && !m.is_live)
 
-      {/* Top utility bar */}
-      <div style={{ background: 'var(--accent)', padding: '5px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 2, color: '#000' }}>
-          OFFICIEEL PLATFORM — BELGIUM TAMIL SPORTS ASSOCIATION
-        </span>
-        <div style={{ display: 'flex', gap: 20 }}>
-          <Link href="/team-login" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 1, color: '#000' }}>TEAM PORTAL</Link>
-          <Link href="/admin" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 1, color: '#000' }}>ADMIN</Link>
+  const sportColor: Record<string, string> = {
+    football: '#E2231A', cricket: '#F5A623', volleyball: '#4CD964', athletics: '#00BFFF',
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#0A0A0A', color: '#F2F2F0', fontFamily: 'Exo 2, sans-serif' }}>
+
+      {/* ── TOP BAR ── */}
+      <div style={{ background: '#000', borderBottom: '1px solid #1a1a1a', padding: '0 40px', height: 36, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 2, color: '#555' }}>
+          BELGIUM TAMIL SPORTS ASSOCIATION — OFFICIEEL PLATFORM
+        </div>
+        <div style={{ display: 'flex', gap: 0 }}>
+          <Link href="/team-login" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 1.5, color: '#888', padding: '0 16px', borderLeft: '1px solid #1a1a1a', textDecoration: 'none' }}>TEAM PORTAL</Link>
+          <Link href="/admin" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 1.5, color: '#888', padding: '0 16px', borderLeft: '1px solid #1a1a1a', textDecoration: 'none' }}>ADMIN</Link>
         </div>
       </div>
 
-      {/* Main navbar */}
-      <nav style={{ background: '#000', padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 14, textDecoration: 'none' }}>
-          <Image src="/btsa-logo.png" alt="BTSA" width={44} height={44} style={{ borderRadius: '50%' }} />
-          <div style={{ borderLeft: '2px solid var(--accent)', paddingLeft: 14 }}>
-            <div style={{ fontFamily: 'Bebas Neue', fontSize: 24, color: '#fff', letterSpacing: 3, lineHeight: 1 }}>BTSA</div>
-            <div style={{ fontSize: 9, color: 'var(--muted)', letterSpacing: 1.5, fontFamily: 'Rajdhani', fontWeight: 600 }}>BELGIUM TAMIL SPORTS</div>
+      {/* ── MAIN NAVBAR ── */}
+      <nav style={{ background: '#111', borderBottom: '3px solid var(--accent)', padding: '0 40px', display: 'flex', alignItems: 'center', gap: 0, height: 64, position: 'sticky', top: 0, zIndex: 100 }}>
+        {/* Logo */}
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', marginRight: 32, paddingRight: 32, borderRight: '1px solid #2a2a2a' }}>
+          <Image src="/btsa-logo.png" alt="BTSA" width={40} height={40} style={{ borderRadius: '50%' }} />
+          <div>
+            <div style={{ fontFamily: 'Bebas Neue', fontSize: 20, color: 'var(--accent)', letterSpacing: 3, lineHeight: 1 }}>BTSA</div>
+            <div style={{ fontSize: 8, color: '#555', letterSpacing: 1.5, fontFamily: 'Rajdhani', fontWeight: 600 }}>BELGIUM TAMIL SPORTS</div>
           </div>
         </Link>
-        <div style={{ display: 'flex', gap: 0 }}>
-          {sports.map((s, i) => (
-            <Link key={s.slug} href={`/${s.slug}`} style={{
-              color: 'var(--muted)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13,
-              letterSpacing: 1.5, textTransform: 'uppercase', padding: '0 20px',
-              borderLeft: i > 0 ? '1px solid var(--border)' : 'none',
-              textDecoration: 'none',
-            }}
-              onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--accent)'}
-              onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--muted)'}
-            >{s.label}</Link>
+        {/* Nav links */}
+        <div style={{ display: 'flex', flex: 1, gap: 0 }}>
+          {navLinks.map(l => (
+            <Link key={l.href} href={l.href}
+              style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, letterSpacing: 1.5, color: '#aaa', padding: '0 20px', height: 64, display: 'flex', alignItems: 'center', textDecoration: 'none', borderBottom: '3px solid transparent', transition: 'color 0.15s, border-color 0.15s' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#fff'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'var(--accent)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#aaa'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
+            >{l.label}</Link>
           ))}
         </div>
+        {/* Live badge */}
+        {liveMatches.length > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(226,35,26,0.12)', border: '1px solid rgba(226,35,26,0.3)', borderRadius: 4, padding: '6px 14px' }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--red)', animation: 'pulse 1s infinite', display: 'inline-block' }} />
+            <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 12, color: 'var(--red)', letterSpacing: 1 }}>{liveMatches.length} LIVE</span>
+          </div>
+        )}
       </nav>
 
-      {/* Hero — editorial split */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', minHeight: 500, borderBottom: '1px solid var(--border)' }}>
-        {/* Left: big text */}
-        <div style={{
-          background: 'var(--bg)',
-          padding: '64px 64px 64px 40px',
-          display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-          borderRight: '1px solid var(--border)',
-        }}>
+      {/* ── HERO ── */}
+      <div style={{ position: 'relative', background: 'linear-gradient(to right, #0A0A0A 40%, #141008)', borderBottom: '1px solid #1a1a1a', overflow: 'hidden' }}>
+        {/* Background accent */}
+        <div style={{ position: 'absolute', right: 0, top: 0, width: '45%', height: '100%', background: 'linear-gradient(135deg, transparent, rgba(245,166,35,0.04))', pointerEvents: 'none' }} />
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 40px', display: 'grid', gridTemplateColumns: '1fr 400px', gap: 60, alignItems: 'center' }}>
           <div>
-            <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--accent)', marginBottom: 20 }}>
-              EST. 2024 — BELGIË
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+              <div style={{ width: 32, height: 3, background: 'var(--accent)' }} />
+              <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--accent)' }}>BTSA · EST. 2024</span>
             </div>
-            <h1 style={{
-              fontSize: 'clamp(52px, 6vw, 88px)',
-              lineHeight: 0.95,
-              letterSpacing: -1,
-              fontFamily: 'Bebas Neue',
-              marginBottom: 28,
-            }}>
-              DE TEMPEL VAN<br />
-              <span style={{ color: 'var(--accent)' }}>TAMIL</span><br />
-              SPORT
+            <h1 style={{ fontFamily: 'Bebas Neue', fontSize: 'clamp(56px, 7vw, 96px)', lineHeight: 0.92, letterSpacing: 1, marginBottom: 24 }}>
+              HET OFFICIËLE<br />
+              PLATFORM VOOR<br />
+              <span style={{ color: 'var(--accent)' }}>TAMIL SPORT</span><br />
+              IN BELGIË
             </h1>
-            <p style={{ color: 'var(--muted)', fontSize: 14, lineHeight: 1.7, maxWidth: 440, fontFamily: 'Exo 2', fontWeight: 300 }}>
-              Competities, uitslagen, transfers en live scores voor alle Tamil sportclubs in België. Football, Cricket, Volleyball en Athletics op één platform.
+            <p style={{ color: '#777', fontSize: 14, lineHeight: 1.8, maxWidth: 460, marginBottom: 36, fontWeight: 300 }}>
+              Volg competities, bekijk live scores, en ontdek spelers en clubs van alle Tamil sportverenigingen in België.
             </p>
+            <div style={{ display: 'flex', gap: 0 }}>
+              <Link href="/football" style={{ textDecoration: 'none' }}>
+                <button style={{ background: 'var(--accent)', color: '#000', padding: '14px 32px', fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2, border: 'none', cursor: 'pointer' }}>
+                  COMPETITIES
+                </button>
+              </Link>
+              <Link href="/team-login" style={{ textDecoration: 'none' }}>
+                <button style={{ background: 'transparent', color: '#fff', padding: '14px 32px', fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2, border: '1px solid #333', cursor: 'pointer', marginLeft: -1 }}>
+                  TEAM LOGIN
+                </button>
+              </Link>
+            </div>
           </div>
-          <div style={{ display: 'flex', gap: 0, marginTop: 40 }}>
-            <Link href="/football" style={{ textDecoration: 'none' }}>
-              <button style={{
-                background: 'var(--accent)', color: '#000', padding: '13px 28px',
-                fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2, border: 'none', cursor: 'pointer',
-              }}>BEKIJK COMPETITIES</button>
+          {/* Right side: logo + quick stats */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
+            <Image src="/btsa-logo.png" alt="BTSA" width={220} height={220} style={{ borderRadius: '50%', filter: 'drop-shadow(0 0 48px rgba(245,166,35,0.2))' }} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: '#1a1a1a', width: '100%' }}>
+              {[['4', 'SPORTEN'], ['—', 'CLUBS'], ['—', 'SPELERS'], ['—', 'MATCHES']].map(([n, l]) => (
+                <div key={l} style={{ background: '#111', padding: '16px 20px' }}>
+                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 30, color: 'var(--accent)', lineHeight: 1 }}>{n}</div>
+                  <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 10, letterSpacing: 1.5, color: '#555', marginTop: 3 }}>{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── SPORT TILES ── */}
+      <div style={{ background: '#0D0D0D', borderBottom: '1px solid #1a1a1a' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
+          {sports.map((s, i) => (
+            <Link key={s.slug} href={`/${s.slug}`} style={{ textDecoration: 'none' }}>
+              <div style={{
+                padding: '28px 24px', borderLeft: i > 0 ? '1px solid #1a1a1a' : 'none',
+                borderTop: `3px solid transparent`, transition: 'border-color 0.2s, background 0.2s',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 16,
+              }}
+                onMouseEnter={e => { const d = e.currentTarget as HTMLDivElement; d.style.borderTopColor = sportColor[s.slug]; d.style.background = '#141414' }}
+                onMouseLeave={e => { const d = e.currentTarget as HTMLDivElement; d.style.borderTopColor = 'transparent'; d.style.background = 'transparent' }}
+              >
+                <span style={{ fontSize: 28 }}>{s.emoji}</span>
+                <div>
+                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 20, letterSpacing: 1, lineHeight: 1 }}>{s.label}</div>
+                  <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 10, letterSpacing: 1, color: '#555', marginTop: 3 }}>BEKIJK MEER →</div>
+                </div>
+              </div>
             </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* ── MAIN CONTENT: News feed + Sidebar ── */}
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 40px', display: 'grid', gridTemplateColumns: '1fr 340px', gap: 40 }}>
+
+        {/* LEFT: Matches feed */}
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 4, height: 24, background: 'var(--accent)' }} />
+              <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 26, letterSpacing: 1 }}>WEDSTRIJDEN</h2>
+            </div>
+            <Link href="/football/matches" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 2, color: '#555', textDecoration: 'none' }}>ALLE WEDSTRIJDEN →</Link>
+          </div>
+
+          {/* Live matches (top priority) */}
+          {liveMatches.map(m => (
+            <div key={m.id} style={{ background: 'rgba(226,35,26,0.06)', border: '1px solid rgba(226,35,26,0.2)', marginBottom: 2, padding: '20px 24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--red)', animation: 'pulse 1s infinite', display: 'inline-block' }} />
+                <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 2, color: 'var(--red)' }}>LIVE</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: 16 }}>
+                <div style={{ fontWeight: 700, fontSize: 16 }}>{m.home_team_name}</div>
+                <div style={{ fontFamily: 'Bebas Neue', fontSize: 40, color: 'var(--red)', textAlign: 'center', lineHeight: 1 }}>{m.home_score ?? 0} — {m.away_score ?? 0}</div>
+                <div style={{ fontWeight: 700, fontSize: 16, textAlign: 'right' }}>{m.away_team_name}</div>
+              </div>
+            </div>
+          ))}
+
+          {/* Recent results */}
+          {matches.length === 0 ? (
+            <div style={{ padding: '40px 0', color: '#555', fontSize: 14 }}>Nog geen wedstrijden beschikbaar.</div>
+          ) : (
+            <div>
+              {matches.map((m, i) => (
+                <div key={m.id} style={{
+                  display: 'grid', gridTemplateColumns: '80px 1fr auto 1fr 100px',
+                  alignItems: 'center', gap: 16, padding: '16px 0',
+                  borderBottom: i < matches.length - 1 ? '1px solid #1a1a1a' : 'none',
+                }}>
+                  <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, letterSpacing: 1, color: '#444' }}>
+                    {m.match_date ?? 'TBD'}
+                  </div>
+                  <div style={{ fontSize: 14, fontWeight: 600, textAlign: 'right' }}>{m.home_team_name}</div>
+                  <div style={{ textAlign: 'center', minWidth: 80 }}>
+                    {m.is_live ? (
+                      <span style={{ fontFamily: 'Bebas Neue', fontSize: 22, color: 'var(--red)' }}>{m.home_score ?? 0}—{m.away_score ?? 0}</span>
+                    ) : m.is_played ? (
+                      <span style={{ fontFamily: 'Bebas Neue', fontSize: 22 }}>{m.home_score}—{m.away_score}</span>
+                    ) : (
+                      <span style={{ fontFamily: 'Bebas Neue', fontSize: 16, color: '#555' }}>VS</span>
+                    )}
+                  </div>
+                  <div style={{ fontSize: 14, fontWeight: 600 }}>{m.away_team_name}</div>
+                  <div style={{ textAlign: 'right' }}>
+                    {m.is_live
+                      ? <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: 'var(--red)', letterSpacing: 1 }}>● LIVE</span>
+                      : m.is_played
+                        ? <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: '#444', letterSpacing: 1 }}>GESPEELD</span>
+                        : <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: 'var(--accent)', letterSpacing: 1 }}>GEPLAND</span>
+                    }
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* RIGHT SIDEBAR */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+
+          {/* Clubs */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+              <div style={{ width: 4, height: 20, background: 'var(--accent)' }} />
+              <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 22, letterSpacing: 1 }}>CLUBS</h3>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {clubs.slice(0, 8).map((c, i) => (
+                <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '11px 0', borderBottom: i < 7 ? '1px solid #1a1a1a' : 'none' }}>
+                  <span style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#333', minWidth: 24 }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, flex: 1 }}>{c.name}</span>
+                  <span style={{ fontSize: 10, fontFamily: 'Rajdhani', fontWeight: 700, color: sportColor[c.sport] ?? '#555', letterSpacing: 1 }}>{c.sport.toUpperCase()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Team login CTA */}
+          <div style={{ background: 'var(--accent)', padding: '28px 24px' }}>
+            <div style={{ fontFamily: 'Bebas Neue', fontSize: 28, color: '#000', lineHeight: 0.95, marginBottom: 10 }}>
+              BEN JIJ EEN<br />CLUB ADMIN?
+            </div>
+            <p style={{ fontSize: 12, color: 'rgba(0,0,0,0.6)', marginBottom: 18, lineHeight: 1.6 }}>
+              Beheer je spelers, teams en toernooien via het BTSA team portal.
+            </p>
             <Link href="/team-login" style={{ textDecoration: 'none' }}>
-              <button style={{
-                background: 'transparent', color: 'var(--text)', padding: '13px 28px',
-                fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2,
-                border: '1px solid var(--border)', cursor: 'pointer', marginLeft: -1,
-              }}>TEAM LOGIN</button>
+              <button style={{ background: '#000', color: '#fff', padding: '11px 24px', fontFamily: 'Bebas Neue', fontSize: 14, letterSpacing: 2, border: 'none', cursor: 'pointer', width: '100%' }}>
+                INLOGGEN →
+              </button>
             </Link>
           </div>
         </div>
+      </div>
 
-        {/* Right: logo + stat strip */}
-        <div style={{ background: '#0D0D0D', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-            <Image src="/btsa-logo.png" alt="BTSA" width={260} height={260} style={{
-              borderRadius: '50%',
-              filter: 'drop-shadow(0 0 40px rgba(245,166,35,0.3))',
-            }} />
+      {/* ── TOURNAMENTS CAROUSEL ── */}
+      {tournaments.length > 0 && (
+        <div style={{ borderTop: '1px solid #1a1a1a', background: '#0D0D0D', padding: '48px 0' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px', marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 4, height: 24, background: 'var(--accent)' }} />
+              <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 26, letterSpacing: 1 }}>TOERNOOIEN</h2>
+            </div>
           </div>
-          <div style={{ borderTop: '1px solid var(--border)', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-            {[['4', 'SPORTEN'], ['—', 'CLUBS'], ['—', 'SPELERS'], ['—', 'WEDSTRIJDEN']].map(([num, label]) => (
-              <div key={label} style={{ padding: '18px 20px', borderRight: label === 'SPORTEN' || label === 'CLUBS' ? '1px solid var(--border)' : 'none', borderBottom: label === 'SPORTEN' || label === 'CLUBS' ? '1px solid var(--border)' : 'none' }}>
-                <div style={{ fontFamily: 'Bebas Neue', fontSize: 28, color: 'var(--accent)', lineHeight: 1 }}>{num}</div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 10, letterSpacing: 1.5, color: 'var(--muted)', marginTop: 2 }}>{label}</div>
-              </div>
+          <div ref={carouselRef} style={{ display: 'flex', gap: 0, overflowX: 'auto', paddingLeft: 40, scrollbarWidth: 'none' }}>
+            {tournaments.map((t, i) => (
+              <Link key={t.id} href={`/${t.sport}/tournament/${t.id}`} style={{ textDecoration: 'none', flexShrink: 0 }}>
+                <div style={{
+                  width: 240, borderLeft: i > 0 ? '1px solid #1a1a1a' : 'none',
+                  padding: '24px 28px', cursor: 'pointer', transition: 'background 0.15s',
+                }}
+                  onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = '#141414'}
+                  onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = 'transparent'}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                    <span style={{ width: 8, height: 8, borderRadius: '50%', background: t.status === 'ongoing' ? 'var(--green)' : t.status === 'finished' ? '#444' : 'var(--accent)', display: 'inline-block' }} />
+                    <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: '#555', letterSpacing: 1.5 }}>{t.sport?.toUpperCase()}</span>
+                  </div>
+                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 20, lineHeight: 1.1, marginBottom: 8 }}>{t.name}</div>
+                  <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 11, color: '#555', letterSpacing: 0.5 }}>{t.start_date ?? '—'}</div>
+                  {t.clubs?.name && <div style={{ marginTop: 8, fontSize: 11, color: '#444' }}>org. {t.clubs.name}</div>}
+                </div>
+              </Link>
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Live scores strip */}
-      {recentMatches.length > 0 && (
-        <div style={{ background: '#111', borderBottom: '2px solid var(--border)', display: 'flex', alignItems: 'stretch', overflowX: 'auto' }}>
-          <div style={{ background: 'var(--accent)', color: '#000', display: 'flex', alignItems: 'center', padding: '0 20px', flexShrink: 0, fontFamily: 'Bebas Neue', fontSize: 13, letterSpacing: 2 }}>
-            SCORES
-          </div>
-          {recentMatches.map((m, i) => (
-            <div key={m.id} style={{
-              display: 'flex', alignItems: 'center', gap: 12, padding: '12px 24px',
-              borderLeft: '1px solid var(--border)', flexShrink: 0, minWidth: 220,
-              borderRight: i === recentMatches.length - 1 ? '1px solid var(--border)' : 'none',
-            }}>
-              {m.is_live && <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--red)', flexShrink: 0, animation: 'pulse 1s infinite' }} />}
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 120 }}>{m.home_team_name}</div>
-                <div style={{ fontSize: 12, color: 'var(--muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 120 }}>{m.away_team_name}</div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontFamily: 'Bebas Neue', fontSize: 20, lineHeight: 1, color: m.is_live ? 'var(--accent)' : 'var(--text)' }}>
-                  {m.is_played ? `${m.home_score}-${m.away_score}` : 'vs'}
-                </div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 9, letterSpacing: 1, color: m.is_live ? 'var(--red)' : 'var(--muted)' }}>
-                  {m.is_live ? 'LIVE' : m.is_played ? 'FT' : m.match_date ?? 'TBD'}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
       )}
 
-      {/* Sports section — numbered list style */}
-      <div style={{ padding: '72px 40px', maxWidth: 1100, margin: '0 auto', width: '100%' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginBottom: 48 }}>
-          <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 42, letterSpacing: 1 }}>ONZE SPORTEN</h2>
-          <div style={{ flex: 1, height: 1, background: 'var(--border)', marginBottom: 6 }} />
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gridTemplateRows: 'auto auto', gap: 1, background: 'var(--border)' }}>
-          {/* Big featured card: football */}
-          <Link href="/football" style={{ textDecoration: 'none', gridRow: '1 / 3' }}>
-            <div style={{
-              background: 'var(--bg2)', padding: '48px 40px', height: '100%',
-              display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-              cursor: 'pointer', transition: 'background 0.2s',
-            }}
-              onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = '#181818'}
-              onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = 'var(--bg2)'}
-            >
-              <div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--muted)', marginBottom: 16 }}>01</div>
-                <div style={{ fontSize: 72, marginBottom: 16 }}>⚽</div>
-                <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 56, letterSpacing: 1, lineHeight: 0.95, marginBottom: 12 }}>FOOT<br />BALL</h3>
-                <p style={{ color: 'var(--muted)', fontSize: 13, fontFamily: 'Exo 2', fontWeight: 300, lineHeight: 1.6 }}>
-                  Competities, bekertoernooien en uitgebreide spelersstatistieken. Goals, assists en kaarten bijgehouden per wedstrijd.
-                </p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 32, color: 'var(--accent)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 12, letterSpacing: 1 }}>
-                BEKIJK FOOTBALL <span style={{ fontSize: 16 }}>→</span>
-              </div>
+      {/* ── FOOTER ── */}
+      <footer style={{ background: '#000', borderTop: '1px solid #1a1a1a', padding: '40px', marginTop: 'auto' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 40 }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+              <Image src="/btsa-logo.png" alt="BTSA" width={32} height={32} style={{ borderRadius: '50%' }} />
+              <span style={{ fontFamily: 'Bebas Neue', fontSize: 18, color: 'var(--accent)', letterSpacing: 2 }}>BTSA</span>
             </div>
-          </Link>
-
-          {/* Cricket */}
-          <Link href="/cricket" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'var(--bg2)', padding: '32px 28px',
-              cursor: 'pointer', transition: 'background 0.2s', height: '100%',
-            }}
-              onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = '#181818'}
-              onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = 'var(--bg2)'}
-            >
-              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--muted)', marginBottom: 10 }}>02</div>
-              <div style={{ fontSize: 36, marginBottom: 10 }}>🏏</div>
-              <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 36, letterSpacing: 1 }}>CRICKET</h3>
-              <p style={{ color: 'var(--muted)', fontSize: 12, fontFamily: 'Exo 2', marginTop: 8, lineHeight: 1.6 }}>T20 & ODI · Live ball-by-ball scoring</p>
-            </div>
-          </Link>
-
-          {/* Volleyball */}
-          <Link href="/volleyball" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'var(--bg2)', padding: '32px 28px',
-              cursor: 'pointer', transition: 'background 0.2s', height: '100%',
-            }}
-              onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = '#181818'}
-              onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = 'var(--bg2)'}
-            >
-              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--muted)', marginBottom: 10 }}>03</div>
-              <div style={{ fontSize: 36, marginBottom: 10 }}>🏐</div>
-              <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 36, letterSpacing: 1 }}>VOLLEYBALL</h3>
-              <p style={{ color: 'var(--muted)', fontSize: 12, fontFamily: 'Exo 2', marginTop: 8, lineHeight: 1.6 }}>Indoor competitie · Set-score systeem</p>
-            </div>
-          </Link>
-
-          {/* Athletics — spans 2 cols */}
-          <Link href="/athletics" style={{ textDecoration: 'none', gridColumn: '2 / 4' }}>
-            <div style={{
-              background: '#111', padding: '28px',
-              cursor: 'pointer', transition: 'background 0.2s', height: '100%',
-              display: 'flex', alignItems: 'center', gap: 24,
-            }}
-              onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = '#181818'}
-              onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = '#111'}
-            >
-              <div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--muted)', marginBottom: 6 }}>04</div>
-                <div style={{ fontSize: 28 }}>🏃</div>
-              </div>
-              <div>
-                <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 28, letterSpacing: 1 }}>ATHLETICS</h3>
-                <p style={{ color: 'var(--muted)', fontSize: 12, fontFamily: 'Exo 2', marginTop: 4 }}>Registratie open — schrijf je club in</p>
-              </div>
-              <div style={{ marginLeft: 'auto', color: 'var(--accent)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 12, letterSpacing: 1 }}>→</div>
-            </div>
-          </Link>
-        </div>
-      </div>
-
-      {/* Rankings section */}
-      <div style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '280px 1fr', minHeight: 220 }}>
-          {/* Label column */}
-          <div style={{ padding: '40px', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--accent)', marginBottom: 10 }}>GLOBAAL</div>
-              <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 38, lineHeight: 0.95 }}>TEAM<br />RANKINGS</h2>
-            </div>
-            <Link href="/football/rankings" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 2, color: 'var(--muted)', textDecoration: 'none' }}>
-              ALLE RANKINGS →
-            </Link>
+            <p style={{ fontSize: 12, color: '#444', lineHeight: 1.7 }}>Belgium Tamil Sports Association — officieel platform voor Tamil sport in België.</p>
           </div>
-          {/* Rankings */}
-          <div style={{ padding: '40px 48px' }}>
-            {rankings.length === 0 ? (
-              <p style={{ color: 'var(--muted)', fontSize: 13, paddingTop: 20 }}>Rankings worden gepubliceerd zodra toernooien zijn afgelopen.</p>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                {rankings.map((r, i) => (
-                  <div key={r.id} style={{
-                    display: 'flex', alignItems: 'center', gap: 20,
-                    padding: '14px 0', borderBottom: i < rankings.length - 1 ? '1px solid var(--border)' : 'none',
-                  }}>
-                    <span style={{
-                      fontFamily: 'Bebas Neue', fontSize: 32, lineHeight: 1, minWidth: 40,
-                      color: i === 0 ? 'var(--accent)' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : 'var(--muted)',
-                    }}>{i + 1}</span>
-                    <span style={{ flex: 1, fontWeight: 600, fontSize: 14 }}>{r.team_name}</span>
-                    <span style={{ fontFamily: 'Bebas Neue', fontSize: 22, color: 'var(--accent)' }}>{r.points} <span style={{ fontSize: 12, fontFamily: 'Rajdhani', color: 'var(--muted)' }}>PTS</span></span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div style={{ marginTop: 'auto', background: '#000', padding: '28px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Image src="/btsa-logo.png" alt="BTSA" width={28} height={28} style={{ borderRadius: '50%', opacity: 0.6 }} />
-          <span style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 12, color: 'var(--muted)' }}>© 2026 Belgium Tamil Sports Association</span>
-        </div>
-        <div style={{ display: 'flex', gap: 24 }}>
           {sports.map(s => (
-            <Link key={s.slug} href={`/${s.slug}`} style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 12, color: 'var(--muted)', textDecoration: 'none' }}>
-              {s.label}
-            </Link>
+            <div key={s.slug}>
+              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, color: '#555', letterSpacing: 2, marginBottom: 12 }}>{s.label.toUpperCase()}</div>
+              {['Teams', 'Wedstrijden', 'Rankings', 'Toernooien'].map(p => (
+                <div key={p} style={{ marginBottom: 8 }}>
+                  <Link href={`/${s.slug}`} style={{ fontSize: 12, color: '#444', textDecoration: 'none' }}>{p}</Link>
+                </div>
+              ))}
+            </div>
           ))}
         </div>
-      </div>
+        <div style={{ maxWidth: 1200, margin: '24px auto 0', paddingTop: 20, borderTop: '1px solid #1a1a1a', fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 11, color: '#333', letterSpacing: 1 }}>
+          © 2026 BELGIUM TAMIL SPORTS ASSOCIATION
+        </div>
+      </footer>
     </div>
   )
 }
