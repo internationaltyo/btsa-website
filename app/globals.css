@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg:        #0A0A0A;
-  --bg2:       #141414;
-  --bg3:       #1C1C1C;
-  --border:    #2A2A2A;
+  --bg:        #0D1B2A;
+  --bg2:       #0a1520;
+  --bg3:       #111e2e;
+  --border:    #1e3048;
   --accent:    #F5A623;
   --accent2:   #FFC93C;
   --green:     #4CD964;
@@ -19,7 +19,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: var(--bg);
+  background-color: #0D1B2A;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--text);
   font-family: 'Exo 2', sans-serif;
   font-size: 14px;

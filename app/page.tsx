@@ -128,15 +128,9 @@ export default function HomePage() {
       </nav>
 
       {/* ── HERO ── */}
-      <div style={{ position: 'relative', borderBottom: '1px solid #1a1a1a', overflow: 'hidden',
-        background: '#0D1B2A',
-        backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)`,
-        backgroundSize: '28px 28px',
-      }}>
-        {/* Dark overlay gradient zodat tekst goed leesbaar blijft */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(13,27,42,0.95) 40%, rgba(13,27,42,0.7))', pointerEvents: 'none' }} />
+      <div style={{ position: 'relative', borderBottom: '1px solid #1e3048', overflow: 'hidden' }}>
         {/* Gouden gloed rechts */}
-        <div style={{ position: 'absolute', right: 0, top: 0, width: '50%', height: '100%', background: 'radial-gradient(ellipse at right center, rgba(245,166,35,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', right: 0, top: 0, width: '50%', height: '100%', background: 'radial-gradient(ellipse at right center, rgba(245,166,35,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 40px', display: 'grid', gridTemplateColumns: '1fr 400px', gap: 60, alignItems: 'center' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
@@ -181,7 +175,7 @@ export default function HomePage() {
       </div>
 
       {/* ── SPORT TILES ── */}
-      <div style={{ borderBottom: '1px solid #1a1a1a', background: '#0D1B2A', backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '28px 28px' }}>
+      <div style={{ borderBottom: '1px solid #1e3048', background: 'rgba(0,0,0,0.25)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
           {sports.map((s, i) => (
             <Link key={s.slug} href={`/${s.slug}`} style={{ textDecoration: 'none' }}>
