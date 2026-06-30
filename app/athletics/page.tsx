@@ -363,16 +363,16 @@ export default function AthleticsPage() {
       </div>
 
       {/* ── PARTICIPANTS LIST ── */}
-      <div style={{ padding: '72px 48px', background: C.light }}>
+      <div style={{ padding: '72px 48px', background: C.dark }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 56 }}>
             <div>
-              <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: C.red, marginBottom: 8 }}>பதிவு பட்டியல் · DEELNEMERSLIJST</div>
-              <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 56, color: C.dark, margin: 0, lineHeight: 0.9 }}>
-                DEELNEMERS<br /><span style={{ color: C.red }}>OVERZICHT</span>
+              <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: C.gold, marginBottom: 8 }}>பதிவு பட்டியல் · DEELNEMERSLIJST</div>
+              <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 56, color: C.white, margin: 0, lineHeight: 0.9 }}>
+                DEELNEMERS<br /><span style={{ color: C.gold }}>OVERZICHT</span>
               </h2>
             </div>
-            <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 64, color: 'rgba(0,0,0,0.06)', lineHeight: 1 }}>{totalRegistrations}</div>
+            <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 64, color: 'rgba(255,255,255,0.06)', lineHeight: 1 }}>{totalRegistrations}</div>
           </div>
 
           {AGE_GROUPS.map((ag, idx) => (
@@ -451,7 +451,7 @@ export default function AthleticsPage() {
           ))}
 
           {registrations.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '64px 0', color: C.muted, fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 16 }}>
+            <div style={{ textAlign: 'center', padding: '64px 0', color: 'rgba(255,255,255,0.3)', fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 16 }}>
               Nog geen inschrijvingen · இன்னும் பதிவுகள் இல்லை
             </div>
           )}
