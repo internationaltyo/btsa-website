@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 
 const sports = [
@@ -27,6 +27,13 @@ export default function HomePage() {
   const [clubs, setClubs] = useState<any[]>([])
   const [activeNav, setActiveNav] = useState<string | null>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
+  const photosRef = useRef<HTMLDivElement>(null)
+
+  const scrollPhotos = useCallback((dir: 'left' | 'right') => {
+    if (photosRef.current) {
+      photosRef.current.scrollBy({ left: dir === 'right' ? 320 : -320, behavior: 'smooth' })
+    }
+  }, [])
 
   useEffect(() => {
     supabase.from('tournament_matches').select('*').order('match_date', { ascending: false }).limit(8).then(({ data }) => setMatches(data ?? []))
@@ -243,6 +250,75 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      </div>
+
+      {/* ── BTSA PHOTOS (Barcelona Stories stijl) ── */}
+      <div style={{ background: '#fff', padding: '48px 0 56px' }}>
+        {/* Titel gecentreerd */}
+        <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 36, letterSpacing: 2, color: '#111', textAlign: 'center', marginBottom: 32 }}>
+          BTSA PHOTOS
+        </h2>
+        {/* Carousel wrapper */}
+        <div style={{ position: 'relative' }}>
+          {/* Scroll container */}
+          <div ref={photosRef} style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingLeft: 40, paddingRight: 80, scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}>
+            {[
+              { label: 'Football', sport: 'football', color: 'linear-gradient(135deg, #1a0a0a, #4a0a0a)', emoji: '⚽' },
+              { label: 'Cricket', sport: 'cricket', color: 'linear-gradient(135deg, #1a120a, #4a2a0a)', emoji: '🏏' },
+              { label: 'Volleyball', sport: 'volleyball', color: 'linear-gradient(135deg, #0a1a0a, #0a3a0a)', emoji: '🏐' },
+              { label: 'Athletics', sport: 'athletics', color: 'linear-gradient(135deg, #0a0a1a, #0a0a4a)', emoji: '🏃' },
+              { label: 'Football', sport: 'football', color: 'linear-gradient(135deg, #2a0a1a, #5a0a2a)', emoji: '⚽' },
+              { label: 'Cricket', sport: 'cricket', color: 'linear-gradient(135deg, #1a1a0a, #3a3a0a)', emoji: '🏏' },
+              { label: 'Volleyball', sport: 'volleyball', color: 'linear-gradient(135deg, #0a1a1a, #0a3a3a)', emoji: '🏐' },
+              { label: 'BTSA', sport: 'football', color: 'linear-gradient(135deg, #0D1128, #1e2a4a)', emoji: '🏆' },
+            ].map((item, i) => (
+              <div key={i} style={{ flexShrink: 0, scrollSnapAlign: 'start', width: 200, height: 280, borderRadius: 12, overflow: 'hidden', position: 'relative', cursor: 'pointer', background: item.color }}>
+                {/* NEW badge */}
+                <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 2, background: 'var(--accent)', color: '#000', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: 11, letterSpacing: 1, padding: '3px 10px', borderRadius: 20 }}>
+                  NEW
+                </div>
+                {/* Emoji decoratie midden */}
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 64, opacity: 0.3 }}>
+                  {item.emoji}
+                </div>
+                {/* Bottom overlay + label */}
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85), transparent)', padding: '32px 14px 14px' }}>
+                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 16, color: '#fff', letterSpacing: 0.5 }}>{item.label}</div>
+                </div>
+              </div>
+            ))}
+            {/* Lege ruimte rechts voor de pijl */}
+            <div style={{ flexShrink: 0, width: 20 }} />
+          </div>
+
+          {/* Pijl rechts — exact zoals Barcelona */}
+          <button
+            onClick={() => scrollPhotos('right')}
+            style={{
+              position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
+              width: 44, height: 44, borderRadius: '50%',
+              background: '#fff', border: '2px solid #ddd',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', fontSize: 18, color: '#333',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+              zIndex: 10,
+            }}
+          >›</button>
+
+          {/* Pijl links */}
+          <button
+            onClick={() => scrollPhotos('left')}
+            style={{
+              position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)',
+              width: 44, height: 44, borderRadius: '50%',
+              background: '#fff', border: '2px solid #ddd',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', fontSize: 18, color: '#333',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+              zIndex: 10,
+            }}
+          >‹</button>
+        </div>
       </div>
 
       {/* ── MAIN CONTENT: News feed + Sidebar ── */}
