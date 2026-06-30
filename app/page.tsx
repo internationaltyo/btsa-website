@@ -253,48 +253,78 @@ export default function HomePage() {
       </div>
 
       {/* ── TROPHIES (100% Barcelona stijl) ── */}
-      <div style={{ background: '#0D1128', padding: '48px 40px' }}>
+      <div style={{ background: '#0D1128', padding: '40px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
           {[
-            { label: 'Trofee 1', icon: '🏆', number: '—', unit: 'TITELS' },
-            { label: 'Trofee 2', icon: '🥇', number: '—', unit: 'TITELS' },
-            { label: 'Trofee 3', icon: '🏅', number: '—', unit: 'TITELS' },
-            { label: 'Trofee 4', icon: '🏆', number: '—', unit: 'TITELS' },
+            { label: 'Trofee 1', number: '—', unit: 'TITELS' },
+            { label: 'Trofee 2', number: '—', unit: 'TITELS' },
+            { label: 'Trofee 3', number: '—', unit: 'TITELS' },
+            { label: 'Trofee 4', number: '—', unit: 'TITELS' },
           ].map((t, i) => (
             <div key={i} style={{
-              position: 'relative', overflow: 'hidden', borderRadius: 8,
-              background: '#0a0d1e',
-              padding: '20px 18px',
-              display: 'flex', alignItems: 'center', gap: 12,
-              border: '1px solid #1e2444',
+              position: 'relative', overflow: 'hidden', borderRadius: 10,
+              background: '#06060f',
+              height: 110,
+              display: 'flex', alignItems: 'center',
             }}>
-              {/* Diagonale streepjes achtergrond — exact Barcelona stijl */}
+              {/* Horizontale rode lijnen bovenaan */}
               <div style={{
                 position: 'absolute', inset: 0, zIndex: 0,
-                backgroundImage: `repeating-linear-gradient(
-                  120deg,
-                  transparent,
-                  transparent 8px,
-                  rgba(165,0,68,0.18) 8px,
-                  rgba(165,0,68,0.18) 10px,
-                  transparent 10px,
-                  transparent 18px,
-                  rgba(0,68,148,0.18) 18px,
-                  rgba(0,68,148,0.18) 20px
-                )`,
+                backgroundImage: `
+                  repeating-linear-gradient(
+                    175deg,
+                    transparent 0px,
+                    transparent 3px,
+                    rgba(220,50,50,0.55) 3px,
+                    rgba(220,50,50,0.55) 4px,
+                    transparent 4px,
+                    transparent 9px,
+                    rgba(180,30,80,0.4) 9px,
+                    rgba(180,30,80,0.4) 10px
+                  )
+                `,
+                clipPath: 'inset(0 0 55% 0)',
               }} />
-              {/* Label links */}
-              <div style={{ position: 'relative', zIndex: 1, minWidth: 70 }}>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 11, color: '#aaa', letterSpacing: 0.5, lineHeight: 1.3 }}>{t.label}</div>
-              </div>
-              {/* Trofee icoon + nummer */}
-              <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ fontSize: 28 }}>{t.icon}</span>
-                <span style={{ fontFamily: 'Bebas Neue', fontSize: 52, color: '#F5A623', lineHeight: 1 }}>{t.number}</span>
-              </div>
-              {/* Unit rechts */}
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#fff', letterSpacing: 1 }}>{t.unit}</div>
+              {/* Horizontale blauwe lijnen onderaan */}
+              <div style={{
+                position: 'absolute', inset: 0, zIndex: 0,
+                backgroundImage: `
+                  repeating-linear-gradient(
+                    175deg,
+                    transparent 0px,
+                    transparent 3px,
+                    rgba(40,80,200,0.55) 3px,
+                    rgba(40,80,200,0.55) 4px,
+                    transparent 4px,
+                    transparent 9px,
+                    rgba(60,40,180,0.4) 9px,
+                    rgba(60,40,180,0.4) 10px
+                  )
+                `,
+                clipPath: 'inset(55% 0 0 0)',
+              }} />
+              {/* Zwarte band in het midden */}
+              <div style={{
+                position: 'absolute', left: 0, right: 0,
+                top: '50%', transform: 'translateY(-50%)',
+                height: '46%', background: 'rgba(0,0,0,0.82)', zIndex: 1,
+              }} />
+              {/* Content */}
+              <div style={{ position: 'relative', zIndex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, width: '100%', padding: '0 20px' }}>
+                {/* Label */}
+                <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, color: '#fff', letterSpacing: 0.5, minWidth: 60, textAlign: 'right' }}>{t.label}</span>
+                {/* Trofee SVG (goud) */}
+                <svg width="36" height="40" viewBox="0 0 36 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M28 2H8v14c0 5.523 4.477 10 10 10s10-4.477 10-10V2z" fill="#F5A623"/>
+                  <path d="M8 6H3a1 1 0 00-1 1v3c0 3.314 2.686 6 6 6h0" stroke="#F5A623" strokeWidth="2" fill="none"/>
+                  <path d="M28 6h5a1 1 0 011 1v3c0 3.314-2.686 6-6 6h0" stroke="#F5A623" strokeWidth="2" fill="none"/>
+                  <path d="M18 26v6M12 38h12" stroke="#F5A623" strokeWidth="2.5" strokeLinecap="round"/>
+                  <path d="M13 32h10" stroke="#F5A623" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                {/* Nummer */}
+                <span style={{ fontFamily: 'Bebas Neue', fontSize: 56, color: '#F5A623', lineHeight: 1, letterSpacing: 1 }}>{t.number}</span>
+                {/* Unit */}
+                <span style={{ fontFamily: 'Bebas Neue', fontSize: 15, color: '#fff', letterSpacing: 2 }}>{t.unit}</span>
               </div>
             </div>
           ))}
