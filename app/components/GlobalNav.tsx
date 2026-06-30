@@ -49,9 +49,10 @@ export default function GlobalNav() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {[
-            { label: 'RANGLIJST', href: '/rankings' },
-            { label: 'CLUBS',     href: '/football/teams' },
-            { label: 'ADMIN',     href: '/admin' },
+            { label: 'RANGLIJST',    href: '/rankings' },
+            { label: 'ORGANISATIE',  href: '/organisatie' },
+            { label: 'CLUBS',        href: '/football/teams' },
+            { label: 'ADMIN',        href: '/admin' },
           ].map(l => (
             <a key={l.href} href={l.href} style={{
               fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 14, letterSpacing: 1,
