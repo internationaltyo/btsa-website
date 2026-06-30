@@ -12,6 +12,10 @@ export default function AdminPage() {
   const [tab, setTab] = useState<Tab>('clubs')
   const [loading, setLoading] = useState(true)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [loginEmail, setLoginEmail] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
+  const [loginError, setLoginError] = useState('')
+  const [loginLoading, setLoginLoading] = useState(false)
   const [clubs, setClubs] = useState<any[]>([])
   const [accounts, setAccounts] = useState<any[]>([])
   const [borrows, setBorrows] = useState<any[]>([])
@@ -24,15 +28,28 @@ export default function AdminPage() {
   useEffect(() => {
     async function init() {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { router.push('/team-login'); return }
+      if (!user) { setLoading(false); return }
       const { data: admin } = await supabase.from('country_admins').select('*').eq('user_id', user.id).single()
-      if (!admin) { router.push('/'); return }
+      if (!admin) { setLoading(false); return }
       setIsAdmin(true)
       setLoading(false)
       loadAll()
     }
     init()
-  }, [router])
+  }, [])
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault()
+    setLoginError(''); setLoginLoading(true)
+    const { error } = await supabase.auth.signInWithPassword({ email: loginEmail, password: loginPassword })
+    if (error) { setLoginError(error.message); setLoginLoading(false); return }
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { setLoginError('Inloggen mislukt'); setLoginLoading(false); return }
+    const { data: admin } = await supabase.from('country_admins').select('*').eq('user_id', user.id).single()
+    if (!admin) { setLoginError('Geen admin rechten voor dit account'); setLoginLoading(false); return }
+    setIsAdmin(true); setLoginLoading(false)
+    loadAll()
+  }
 
   async function loadAll() {
     const [cl, ac, bo, tr, co] = await Promise.all([
@@ -107,6 +124,27 @@ export default function AdminPage() {
   )
 
   if (loading) return <div style={{ padding: 40 }}><p style={{ color: 'var(--muted)' }}>Laden…</p></div>
+
+  if (!isAdmin) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: 380 }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <div style={{ fontFamily: 'Bebas Neue', fontSize: 28, color: 'var(--accent)', letterSpacing: 3 }}>BTSA</div>
+          <h2 style={{ fontSize: 26, marginTop: 8 }}>ADMIN LOGIN</h2>
+        </div>
+        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div><label style={{ display: 'block', marginBottom: 6, fontSize: 11, color: 'var(--muted)' }}>E-MAIL</label>
+            <input type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} required /></div>
+          <div><label style={{ display: 'block', marginBottom: 6, fontSize: 11, color: 'var(--muted)' }}>WACHTWOORD</label>
+            <input type="password" value={loginPassword} onChange={e => setLoginPassword(e.target.value)} required /></div>
+          {loginError && <p style={{ color: 'var(--red)', fontSize: 13 }}>{loginError}</p>}
+          <button type="submit" className="btn-primary" disabled={loginLoading}>
+            {loginLoading ? 'Inloggen…' : 'INLOGGEN'}
+          </button>
+        </form>
+      </div>
+    </div>
+  )
 
   return (
     <div style={{ padding: 32, maxWidth: 1000, margin: '0 auto' }}>
