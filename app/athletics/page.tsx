@@ -342,17 +342,17 @@ export default function AthleticsPage() {
         </div>
       </div>
 
-      {/* ── PARTICIPANTS LIST (alternating dark/light) ── */}
-      <div style={{ padding: '72px 48px', background: C.dark }}>
+      {/* ── PARTICIPANTS LIST ── */}
+      <div style={{ padding: '72px 48px', background: C.light }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 56 }}>
             <div>
-              <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: C.gold, marginBottom: 8 }}>பதிவு பட்டியல் · DEELNEMERSLIJST</div>
-              <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 56, color: C.white, margin: 0, lineHeight: 0.9 }}>
-                DEELNEMERS<br /><span style={{ color: C.gold }}>OVERZICHT</span>
+              <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: C.red, marginBottom: 8 }}>பதிவு பட்டியல் · DEELNEMERSLIJST</div>
+              <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 56, color: C.dark, margin: 0, lineHeight: 0.9 }}>
+                DEELNEMERS<br /><span style={{ color: C.red }}>OVERZICHT</span>
               </h2>
             </div>
-            <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 64, color: 'rgba(255,255,255,0.06)', lineHeight: 1 }}>{totalRegistrations}</div>
+            <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 64, color: 'rgba(0,0,0,0.06)', lineHeight: 1 }}>{totalRegistrations}</div>
           </div>
 
           {AGE_GROUPS.map((ag, idx) => (
@@ -363,7 +363,7 @@ export default function AthleticsPage() {
                   <span style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 22, color: C.white, letterSpacing: 1 }}>{ag.labelEn}</span>
                   <span style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{ag.labelTa}</span>
                 </div>
-                <div style={{ flex: 1, height: 2, background: 'rgba(255,255,255,0.08)' }} />
+                <div style={{ flex: 1, height: 2, background: C.border }} />
               </div>
 
               {/* Gender columns */}
@@ -383,26 +383,27 @@ export default function AthleticsPage() {
                     </div>
 
                     {/* Sports list */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                       {ag.sports.map((sport, si) => {
                         const names = getNamesForSport(ag.key, sport.en, g)
                         return (
                           <div key={sport.en} style={{
-                            background: names.length > 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
+                            background: C.white,
                             padding: '14px 16px',
-                            borderLeft: `3px solid ${names.length > 0 ? C.gold : 'rgba(255,255,255,0.1)'}`,
+                            borderLeft: `4px solid ${names.length > 0 ? C.gold : C.border}`,
+                            borderBottom: `1px solid ${C.border}`,
                           }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: names.length > 0 ? 10 : 0 }}>
                               <div>
-                                <span style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 14, color: names.length > 0 ? C.white : 'rgba(255,255,255,0.4)' }}>
+                                <span style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 15, color: C.text }}>
                                   {sport.en}
                                 </span>
-                                <span style={{ fontFamily: 'Rajdhani, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.3)', marginLeft: 8 }}>
+                                <span style={{ fontFamily: 'Rajdhani, sans-serif', fontSize: 12, color: C.muted, marginLeft: 8 }}>
                                   {sport.ta}
                                 </span>
                               </div>
                               {names.length > 0 && (
-                                <span style={{ background: C.gold, color: C.dark, padding: '2px 8px', borderRadius: 2, fontFamily: 'Bebas Neue, sans-serif', fontSize: 13 }}>
+                                <span style={{ background: C.gold, color: C.dark, padding: '2px 10px', borderRadius: 2, fontFamily: 'Bebas Neue, sans-serif', fontSize: 14, fontWeight: 700 }}>
                                   {names.length}
                                 </span>
                               )}
@@ -411,7 +412,7 @@ export default function AthleticsPage() {
                               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                                 {names.map((name, ni) => (
                                   <span key={ni} style={{
-                                    background: C.white, color: C.dark, padding: '4px 12px',
+                                    background: C.dark, color: C.white, padding: '4px 12px',
                                     fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 13, borderRadius: 2,
                                   }}>{name}</span>
                                 ))}
@@ -428,7 +429,7 @@ export default function AthleticsPage() {
           ))}
 
           {registrations.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '64px 0', color: 'rgba(255,255,255,0.3)', fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 16 }}>
+            <div style={{ textAlign: 'center', padding: '64px 0', color: C.muted, fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 16 }}>
               Nog geen inschrijvingen · இன்னும் பதிவுகள் இல்லை
             </div>
           )}
