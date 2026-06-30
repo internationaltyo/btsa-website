@@ -259,9 +259,9 @@ export default function HomePage() {
           BTSA PHOTOS
         </h2>
         {/* Carousel wrapper */}
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', maxWidth: 1200, margin: '0 auto', padding: '0 56px' }}>
           {/* Scroll container */}
-          <div ref={photosRef} style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingLeft: 56, paddingRight: 56, scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}>
+          <div ref={photosRef} style={{ display: 'flex', gap: 12, overflowX: 'auto', scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}>
             {[
               { label: 'Football', sport: 'football', color: 'linear-gradient(135deg, #1a0a0a, #4a0a0a)', emoji: '⚽' },
               { label: 'Cricket', sport: 'cricket', color: 'linear-gradient(135deg, #1a120a, #4a2a0a)', emoji: '🏏' },
