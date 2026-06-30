@@ -256,10 +256,10 @@ export default function HomePage() {
       <div style={{ background: '#0D1128', padding: '40px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
           {[
-            { label: 'Trofee 1', number: '—', unit: 'TITELS' },
-            { label: 'Trofee 2', number: '—', unit: 'TITELS' },
-            { label: 'Trofee 3', number: '—', unit: 'TITELS' },
-            { label: 'Trofee 4', number: '—', unit: 'TITELS' },
+            { label: 'Maveerar Cup',   number: '—', unit: 'TITELS' },
+            { label: 'Ilampuyal Cup',  number: '—', unit: 'TITELS' },
+            { label: 'Karthigai Cup',  number: '—', unit: 'TITELS' },
+            { label: 'Siragugal Cup',  number: '—', unit: 'TITELS' },
           ].map((t, i) => (
             <div key={i} style={{
               position: 'relative', overflow: 'hidden', borderRadius: 10,
