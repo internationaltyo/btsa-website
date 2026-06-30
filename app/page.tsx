@@ -262,7 +262,21 @@ export default function HomePage() {
         <div style={{ position: 'relative', maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
           {/* Scroll container */}
           <div ref={photosRef} style={{ display: 'flex', gap: 12, overflowX: 'auto', scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}>
-            {[1,2,3,4,5,6,7,8,9,10,11,12,13].map((n) => (
+            {[
+              { n: 1,  gradient: 'linear-gradient(135deg, rgba(226,35,26,0.45), rgba(13,17,40,0.2))' },
+              { n: 2,  gradient: 'linear-gradient(160deg, rgba(245,166,35,0.4), rgba(13,17,40,0.2))' },
+              { n: 3,  gradient: 'linear-gradient(135deg, rgba(13,17,40,0.3), rgba(226,35,26,0.4))' },
+              { n: 4,  gradient: 'linear-gradient(160deg, rgba(76,217,100,0.35), rgba(13,17,40,0.2))' },
+              { n: 5,  gradient: 'linear-gradient(135deg, rgba(245,166,35,0.5), rgba(226,35,26,0.25))' },
+              { n: 6,  gradient: 'linear-gradient(160deg, rgba(13,17,40,0.2), rgba(245,166,35,0.45))' },
+              { n: 7,  gradient: 'linear-gradient(135deg, rgba(226,35,26,0.5), rgba(245,166,35,0.2))' },
+              { n: 8,  gradient: 'linear-gradient(160deg, rgba(0,191,255,0.35), rgba(13,17,40,0.2))' },
+              { n: 9,  gradient: 'linear-gradient(135deg, rgba(245,166,35,0.45), rgba(76,217,100,0.2))' },
+              { n: 10, gradient: 'linear-gradient(160deg, rgba(226,35,26,0.4), rgba(0,191,255,0.25))' },
+              { n: 11, gradient: 'linear-gradient(135deg, rgba(13,17,40,0.2), rgba(226,35,26,0.5))' },
+              { n: 12, gradient: 'linear-gradient(160deg, rgba(245,166,35,0.35), rgba(226,35,26,0.3))' },
+              { n: 13, gradient: 'linear-gradient(135deg, rgba(76,217,100,0.35), rgba(245,166,35,0.3))' },
+            ].map(({ n, gradient }) => (
               <div key={n} style={{ flexShrink: 0, scrollSnapAlign: 'start', width: 200, height: 280, borderRadius: 12, overflow: 'hidden', position: 'relative', cursor: 'pointer', background: '#111' }}>
                 {/* Echte foto */}
                 <Image
@@ -271,13 +285,15 @@ export default function HomePage() {
                   fill
                   style={{ objectFit: 'cover' }}
                 />
+                {/* Kleur gradient overlay */}
+                <div style={{ position: 'absolute', inset: 0, background: gradient, zIndex: 1 }} />
                 {/* NEW badge */}
-                <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 2, background: 'var(--accent)', color: '#000', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: 11, letterSpacing: 1, padding: '3px 10px', borderRadius: 20 }}>
+                <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 3, background: 'var(--accent)', color: '#000', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: 11, letterSpacing: 1, padding: '3px 10px', borderRadius: 20 }}>
                   NEW
                 </div>
                 {/* Bottom gradient overlay */}
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)', padding: '32px 14px 14px', zIndex: 1 }}>
-                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#fff', letterSpacing: 0.5 }}>BTSA</div>
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.75), transparent)', padding: '32px 14px 14px', zIndex: 2 }}>
+                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#fff', letterSpacing: 0.5 }}>FOOTBALL</div>
                 </div>
               </div>
             ))}
