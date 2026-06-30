@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg:        #05050D;
-  --bg2:       #0D0D1A;
-  --bg3:       #12122A;
-  --border:    #1E1E3A;
-  --accent:    #00C2FF;
-  --accent2:   #7B2FFF;
-  --green:     #00FF87;
-  --red:       #FF3D71;
-  --yellow:    #FFD60A;
-  --text:      #E8E8F0;
-  --muted:     #6B6B8A;
-  --card:      #0D0D1A;
-  --radius:    8px;
+  --bg:        #0A0A0A;
+  --bg2:       #141414;
+  --bg3:       #1C1C1C;
+  --border:    #2A2A2A;
+  --accent:    #F5A623;
+  --accent2:   #FFC93C;
+  --green:     #4CD964;
+  --red:       #E2231A;
+  --yellow:    #F5A623;
+  --text:      #F2F2F0;
+  --muted:     #8A8A85;
+  --card:      #141414;
+  --radius:    4px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

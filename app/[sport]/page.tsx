@@ -3,20 +3,18 @@ export const dynamic = 'force-dynamic'
 
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import type { Sport } from '@/lib/types'
 
-const SPORT_COLOR: Record<string, string> = {
-  football: '#00C2FF', cricket: '#00FF87', volleyball: '#7B2FFF', athletics: '#FFD60A',
-}
 const SPORT_EMOJI: Record<string, string> = {
   football: '⚽', cricket: '🏏', volleyball: '🏐', athletics: '🏃',
 }
 
 export default function SportPage() {
   const { sport } = useParams<{ sport: string }>()
-  const color = SPORT_COLOR[sport] ?? 'var(--accent)'
+  const color = 'var(--accent)'
   const emoji = SPORT_EMOJI[sport] ?? '🏆'
 
   const [clubs, setClubs] = useState<{ id: string; name: string }[]>([])
@@ -34,8 +32,11 @@ export default function SportPage() {
   return (
     <div style={{ minHeight: '100vh' }}>
       {/* Nav */}
-      <nav style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '14px 40px', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }}>
-        <Link href="/" style={{ color: 'var(--muted)', fontSize: 13 }}>← BTSA</Link>
+      <nav style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '12px 40px', borderBottom: '3px solid var(--accent)', background: 'var(--bg2)' }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--muted)', fontSize: 13 }}>
+          <Image src="/btsa-logo.png" alt="BTSA" width={32} height={32} style={{ borderRadius: '50%' }} />
+          BTSA
+        </Link>
         <span style={{ color: 'var(--border)' }}>/</span>
         <span style={{ color, fontFamily: 'Bebas Neue', fontSize: 18 }}>{emoji} {label}</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 20 }}>

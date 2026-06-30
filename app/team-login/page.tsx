@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 
 export default function TeamLoginPage() {
@@ -26,8 +27,10 @@ export default function TeamLoginPage() {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <div style={{ width: '100%', maxWidth: 400 }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <Link href="/" style={{ fontFamily: 'Bebas Neue', fontSize: 28, color: 'var(--accent)', letterSpacing: 3, textDecoration: 'none' }}>BTSA</Link>
-          <h2 style={{ fontSize: 28, marginTop: 8 }}>TEAM PORTAL</h2>
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <Image src="/btsa-logo.png" alt="BTSA" width={72} height={72} style={{ borderRadius: '50%', margin: '0 auto' }} />
+          </Link>
+          <h2 style={{ fontSize: 28, marginTop: 12 }}>TEAM PORTAL</h2>
           <p style={{ color: 'var(--muted)', marginTop: 4, fontSize: 13 }}>Log in met je club account</p>
         </div>
 

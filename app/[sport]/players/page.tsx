@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
@@ -32,8 +33,11 @@ export default function PlayersPage() {
 
   return (
     <div style={{ minHeight: '100vh' }}>
-      <nav style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '14px 40px', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }}>
-        <Link href={`/${sport}`} style={{ color: 'var(--muted)', fontSize: 13 }}>← {label}</Link>
+      <nav style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '14px 40px', borderBottom: '3px solid var(--accent)', background: 'var(--bg2)' }}>
+        <Link href={`/${sport}`} style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--muted)', fontSize: 13 }}>
+          <Image src="/btsa-logo.png" alt="BTSA" width={28} height={28} style={{ borderRadius: '50%' }} />
+          ← {label}
+        </Link>
         <span style={{ color: 'var(--border)' }}>/</span>
         <span style={{ fontFamily: 'Bebas Neue', fontSize: 18 }}>Spelers</span>
       </nav>

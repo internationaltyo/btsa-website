@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 
 type Tab = 'clubs' | 'accounts' | 'borrows' | 'transfers'
@@ -130,8 +131,8 @@ export default function AdminPage() {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: 380 }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ fontFamily: 'Bebas Neue', fontSize: 28, color: 'var(--accent)', letterSpacing: 3 }}>BTSA</div>
-          <h2 style={{ fontSize: 26, marginTop: 8 }}>ADMIN LOGIN</h2>
+          <Image src="/btsa-logo.png" alt="BTSA" width={72} height={72} style={{ borderRadius: '50%', margin: '0 auto' }} />
+          <h2 style={{ fontSize: 26, marginTop: 12 }}>ADMIN LOGIN</h2>
         </div>
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div><label style={{ display: 'block', marginBottom: 6, fontSize: 11, color: 'var(--muted)' }}>E-MAIL</label>
