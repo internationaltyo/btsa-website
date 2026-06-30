@@ -11,15 +11,15 @@ export default function GlobalNav() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 13 }}>
           <span style={{ color: '#ccc' }}>BELGIUM TAMIL SPORTS ASSOCIATION</span>
           <span style={{ color: '#333', margin: '0 4px' }}>·</span>
-          <span style={{ color: '#F5A623' }}>FOOTBALL · CRICKET · VOLLEYBALL · ATHLETICS</span>
+          <span style={{ color: '#F5A623' }}>VOETBAL · CRICKET · VOLLEYBALL · ATLETIEK</span>
         </div>
         <div style={{ width: 200, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
           <Link href="/team-login" style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 13, color: '#ccc', textDecoration: 'none', padding: '6px 14px' }}>
-            <span>👤</span> Login
+            <span>👤</span> Inloggen
           </Link>
           <Link href="/team-login" style={{ textDecoration: 'none' }}>
             <button style={{ background: '#E2231A', color: '#fff', padding: '7px 18px', fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer', borderRadius: 4 }}>
-              Team Portal
+              Team Portaal
             </button>
           </Link>
         </div>
@@ -32,10 +32,10 @@ export default function GlobalNav() {
         </Link>
         <div style={{ display: 'flex', flex: 1, gap: 0 }}>
           {[
-            { label: 'FOOTBALL',   href: '/football' },
+            { label: 'VOETBAL',    href: '/football' },
             { label: 'CRICKET',    href: '/cricket' },
             { label: 'VOLLEYBALL', href: '/volleyball' },
-            { label: 'ATHLETICS',  href: '/athletics' },
+            { label: 'ATLETIEK',   href: '/athletics' },
           ].map(l => (
             <a key={l.href} href={l.href} style={{
               fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 14, letterSpacing: 1,
@@ -49,9 +49,9 @@ export default function GlobalNav() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {[
-            { label: 'RANKINGS', href: '/rankings' },
-            { label: 'CLUBS',    href: '/football/teams' },
-            { label: 'ADMIN',    href: '/admin' },
+            { label: 'RANGLIJST', href: '/rankings' },
+            { label: 'CLUBS',     href: '/football/teams' },
+            { label: 'ADMIN',     href: '/admin' },
           ].map(l => (
             <a key={l.href} href={l.href} style={{
               fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 14, letterSpacing: 1,

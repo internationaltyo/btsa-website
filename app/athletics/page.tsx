@@ -19,25 +19,25 @@ const C = {
 }
 
 const AGE_GROUPS = [
-  { key:'g1',  labelTa:'வயது 04',        labelEn:'Age 4',       birthYears:[2022],      genders:['male','female'] as const,
+  { key:'g1',  labelTa:'வயது 04',        labelEn:'Leeftijd 4',       birthYears:[2022],      genders:['male','female'] as const,
     sports:[{ta:'20மீ. ஓட்டம்',en:'20m Run'},{ta:'இனிப்புடன் ஓடுதல்',en:'Run with Candy'},{ta:'பழம் பொறுக்குதல்',en:'Fruit Picking'},{ta:'நீர் நிரப்புதல்',en:'Water Filling'}]},
-  { key:'g2',  labelTa:'வயது 04-05',     labelEn:'Age 4-5',     birthYears:[2021,2020], genders:['male','female'] as const,
+  { key:'g2',  labelTa:'வயது 04-05',     labelEn:'Leeftijd 4-5',     birthYears:[2021,2020], genders:['male','female'] as const,
     sports:[{ta:'25மீ. ஓட்டம்',en:'25m Run'},{ta:'நிறம் இனம் காணுதல்',en:'Color ID'},{ta:'பழம் பொறுக்குதல்',en:'Fruit Picking'},{ta:'நீர் நிரப்புதல்',en:'Water Filling'}]},
-  { key:'g3',  labelTa:'வயது 06-07',     labelEn:'Age 6-7',     birthYears:[2019,2018], genders:['male','female'] as const,
+  { key:'g3',  labelTa:'வயது 06-07',     labelEn:'Leeftijd 6-7',     birthYears:[2019,2018], genders:['male','female'] as const,
     sports:[{ta:'50மீ. ஓட்டம்',en:'50m Run'},{ta:'வாளிக்குள் பந்து',en:'Ball into Bucket'},{ta:'படம்-சொல் பொருத்தம்',en:'Picture Word Match'},{ta:'நீர் நிரப்புதல்',en:'Water Filling'}]},
-  { key:'g4',  labelTa:'வயது 08-09',     labelEn:'Age 8-9',     birthYears:[2017,2016], genders:['male','female'] as const,
+  { key:'g4',  labelTa:'வயது 08-09',     labelEn:'Leeftijd 8-9',     birthYears:[2017,2016], genders:['male','female'] as const,
     sports:[{ta:'75மீ. ஓட்டம்',en:'75m Run'},{ta:'வாளிக்குள் பந்து',en:'Ball into Bucket'},{ta:'படம்-சொல் பொருத்தம்',en:'Picture Word Match'},{ta:'தலையில் பொதியுடன் ஓடுதல்',en:'Run with Load'}]},
-  { key:'g5',  labelTa:'வயது 10-11',     labelEn:'Age 10-11',   birthYears:[2015,2014], genders:['male','female'] as const,
+  { key:'g5',  labelTa:'வயது 10-11',     labelEn:'Leeftijd 10-11',   birthYears:[2015,2014], genders:['male','female'] as const,
     sports:[{ta:'100மீ. ஓட்டம்',en:'100m Run'},{ta:'சாக்கோட்டம்',en:'Sack Race'},{ta:'உருவம் பொருத்துதல்',en:'Shape Matching'},{ta:'பலூன் உடைத்தல்',en:'Balloon Burst'}]},
-  { key:'g6',  labelTa:'வயது 12-13',     labelEn:'Age 12-13',   birthYears:[2013,2012], genders:['male','female'] as const,
+  { key:'g6',  labelTa:'வயது 12-13',     labelEn:'Leeftijd 12-13',   birthYears:[2013,2012], genders:['male','female'] as const,
     sports:[{ta:'100மீ. ஓட்டம்',en:'100m Run'},{ta:'சாக்கோட்டம்',en:'Sack Race'},{ta:'உருவம் பொருத்துதல்',en:'Shape Matching'},{ta:'யானைக்கு கண் வைத்தல்',en:'Elephant Drawing'}]},
-  { key:'g7',  labelTa:'வயது 14-15',     labelEn:'Age 14-15',   birthYears:[2011,2010], genders:['male','female'] as const,
+  { key:'g7',  labelTa:'வயது 14-15',     labelEn:'Leeftijd 14-15',   birthYears:[2011,2010], genders:['male','female'] as const,
     sports:[{ta:'100மீ. ஓட்டம்',en:'100m Run'},{ta:'குண்டு போடுதல்',en:'Shot Put'},{ta:'சாக்கோட்டம்',en:'Sack Race'},{ta:'யானைக்கு கண் வைத்தல்',en:'Elephant Drawing'}]},
-  { key:'g8',  labelTa:'வயது 16-17',     labelEn:'Age 16-17',   birthYears:[2009,2008], genders:['male','female'] as const,
+  { key:'g8',  labelTa:'வயது 16-17',     labelEn:'Leeftijd 16-17',   birthYears:[2009,2008], genders:['male','female'] as const,
     sports:[{ta:'100மீ. ஓட்டம்',en:'100m Run'},{ta:'சாக்கோட்டம்',en:'Sack Race'},{ta:'குண்டு போடுதல்',en:'Shot Put'},{ta:'நின்று நீளம் பாய்தல்',en:'Standing Long Jump'}]},
-  { key:'g9f', labelTa:'வயது 18+ பெண்',  labelEn:'Age 18+ Women', birthYears:[],        genders:['female'] as const,
+  { key:'g9f', labelTa:'வயது 18+ பெண்',  labelEn:'18+ Vrouwen', birthYears:[],        genders:['female'] as const,
     sports:[{ta:'100மீ. ஓட்டம்',en:'100m Run'},{ta:'கூடையில் பழம்',en:'Fruit Basket'},{ta:'குண்டு போடுதல்',en:'Shot Put'},{ta:'தேசிக்காய்க் கரண்டி',en:'Spoon & Lime'},{ta:'சங்கீதக் கதிரை',en:'Musical Chairs'}]},
-  { key:'g9m', labelTa:'வயது 18+ ஆண்',   labelEn:'Age 18+ Men',   birthYears:[],        genders:['male'] as const,
+  { key:'g9m', labelTa:'வயது 18+ ஆண்',   labelEn:'18+ Mannen',   birthYears:[],        genders:['male'] as const,
     sports:[{ta:'100மீ. ஓட்டம்',en:'100m Run'},{ta:'குண்டு போடுதல்',en:'Shot Put'},{ta:'தட்டு எறிதல்',en:'Discus Throw'},{ta:'சாக்கோட்டம்',en:'Sack Race'},{ta:'பாரம் தூக்குதல்',en:'Weight Lifting'}]},
 ]
 
@@ -498,12 +498,12 @@ export default function AthleticsPage() {
                   <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 14, color: C.muted, marginTop: 4 }}>{modal.ta}</div>
                 </div>
                 <div style={{ background: C.red, color: C.white, padding: '6px 14px', borderRadius: 3, fontFamily: 'Bebas Neue, sans-serif', fontSize: 13, letterSpacing: 1, flexShrink: 0 }}>
-                  BTSA ATHLETICS
+                  BTSA ATLETIEK
                 </div>
               </div>
               <div style={{ borderTop: `3px solid ${C.red}`, paddingTop: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <div>
-                  <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 10, letterSpacing: 2, color: C.red, marginBottom: 6 }}>NEDERLAND</div>
+                  <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 10, letterSpacing: 2, color: C.red, marginBottom: 6 }}>NEDERLANDS</div>
                   <p style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 500, fontSize: 15, color: C.text, lineHeight: 1.6, margin: 0 }}>{modal.descNl}</p>
                 </div>
                 <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 14 }}>

@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
 const SPORTS = [
-  { key: 'football',   label: 'Football',   emoji: '⚽', color: '#E2231A' },
+  { key: 'football',   label: 'Voetbal',    emoji: '⚽', color: '#E2231A' },
   { key: 'cricket',    label: 'Cricket',    emoji: '🏏', color: '#F5A623' },
   { key: 'volleyball', label: 'Volleyball', emoji: '🏐', color: '#4CD964' },
-  { key: 'athletics',  label: 'Athletics',  emoji: '🏃', color: '#00BFFF' },
+  { key: 'athletics',  label: 'Atletiek',   emoji: '🏃', color: '#00BFFF' },
 ]
 
 export default function RankingsPage() {
@@ -35,7 +35,7 @@ export default function RankingsPage() {
       <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: '40px 40px 0' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--accent)', marginBottom: 8 }}>BTSA</div>
-          <h1 style={{ fontFamily: 'Bebas Neue', fontSize: 56, lineHeight: 0.95, marginBottom: 32 }}>RANKINGS</h1>
+          <h1 style={{ fontFamily: 'Bebas Neue', fontSize: 56, lineHeight: 0.95, marginBottom: 32 }}>RANGLIJST</h1>
 
           {/* Sport tabs */}
           <div style={{ display: 'flex', gap: 0 }}>
@@ -60,7 +60,7 @@ export default function RankingsPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <div style={{ width: 4, height: 32, background: sport.color }} />
           <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 28, margin: 0 }}>
-            {sport.emoji} {sport.label.toUpperCase()} — RANKING
+            {sport.emoji} {sport.label.toUpperCase()} — RANGLIJST
           </h2>
         </div>
 
@@ -70,7 +70,7 @@ export default function RankingsPage() {
           <div style={{ padding: '48px', background: 'var(--bg2)', border: '1px solid var(--border)', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>{sport.emoji}</div>
             <p style={{ color: 'var(--muted)', fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 15 }}>
-              Nog geen rankings beschikbaar voor {sport.label}.
+              Nog geen ranglijst beschikbaar voor {sport.label}.
             </p>
           </div>
         ) : (

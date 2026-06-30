@@ -13,6 +13,9 @@ const SPORT_COLOR: Record<string, string> = {
   football: '#E2231A', cricket: '#F5A623', volleyball: '#4CD964', athletics: '#00BFFF',
 }
 
+const SPORT_LABEL: Record<string, string> = {
+  football: 'VOETBAL', cricket: 'CRICKET', volleyball: 'VOLLEYBALL', athletics: 'ATLETIEK',
+}
 const sports = ['football', 'cricket', 'volleyball', 'athletics']
 
 export default function CompetitionsPage() {
@@ -64,7 +67,7 @@ export default function CompetitionsPage() {
                 border: 'none', cursor: 'pointer', borderRadius: 4,
                 background: filter === s ? SPORT_COLOR[s] : 'var(--bg3)',
                 color: filter === s ? '#000' : 'var(--muted)',
-              }}>{SPORT_EMOJI[s]} {s.toUpperCase()}</button>
+              }}>{SPORT_EMOJI[s]} {SPORT_LABEL[s]}</button>
             ))}
           </div>
         </div>
@@ -101,7 +104,7 @@ export default function CompetitionsPage() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
                           {m.is_live && <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#E2231A', display: 'inline-block', animation: 'pulse 1s infinite' }} />}
                           <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, letterSpacing: 1, color: SPORT_COLOR[sport] ?? 'var(--accent)' }}>
-                            {SPORT_EMOJI[sport]} {sport.toUpperCase()}
+                            {SPORT_EMOJI[sport]} {SPORT_LABEL[sport] ?? sport.toUpperCase()}
                           </span>
                         </div>
                         <div style={{ fontSize: 10, color: 'var(--muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
