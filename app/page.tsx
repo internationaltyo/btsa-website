@@ -43,10 +43,10 @@ export default function HomePage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0A0A0A', color: '#F2F2F0', fontFamily: 'Exo 2, sans-serif' }}>
+    <div style={{ minHeight: '100vh', background: 'transparent', color: '#F2F2F0', fontFamily: 'Exo 2, sans-serif' }}>
 
       {/* ── TOP BAR (Barcelona-stijl: gecentreerde tekst + rechts login/knop) ── */}
-      <div style={{ background: '#0f1420', padding: '0 32px', height: 44, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ background: '#080c1a', padding: '0 32px', height: 44, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Left: leeg voor balans */}
         <div style={{ width: 200 }} />
         {/* Center: platform info */}
