@@ -45,8 +45,9 @@ export default function AdminPage() {
     if (error) { setLoginError(error.message); setLoginLoading(false); return }
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setLoginError('Inloggen mislukt'); setLoginLoading(false); return }
-    const { data: admin } = await supabase.from('country_admins').select('*').eq('user_id', user.id).single()
-    if (!admin) { setLoginError('Geen admin rechten voor dit account'); setLoginLoading(false); return }
+    const { data: admin, error: adminErr } = await supabase.from('country_admins').select('*').eq('user_id', user.id).maybeSingle()
+    if (adminErr) { setLoginError(`DB fout: ${adminErr.message} (${adminErr.code})`); setLoginLoading(false); return }
+    if (!admin) { setLoginError(`Geen admin rechten voor user_id ${user.id}`); setLoginLoading(false); return }
     setIsAdmin(true); setLoginLoading(false)
     loadAll()
   }
