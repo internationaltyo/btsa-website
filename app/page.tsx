@@ -198,6 +198,51 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ── MEMBERSHIP BANNER (Barcelona-stijl) ── */}
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 40px 0' }}>
+        <div style={{
+          position: 'relative', borderRadius: 16, overflow: 'hidden',
+          background: 'linear-gradient(135deg, #0a0e20 0%, #111630 50%, #0d1128 100%)',
+          border: '1px solid #1e2444',
+          minHeight: 200,
+        }}>
+          {/* Achtergrond decoratie: grote BTSA logo als watermark */}
+          <div style={{ position: 'absolute', right: -20, top: '50%', transform: 'translateY(-50%)', opacity: 0.08, pointerEvents: 'none' }}>
+            <Image src="/btsa-logo.png" alt="" width={320} height={320} style={{ borderRadius: '50%' }} />
+          </div>
+          {/* Gouden gloed links */}
+          <div style={{ position: 'absolute', left: 0, top: 0, width: '60%', height: '100%', background: 'radial-gradient(ellipse at left center, rgba(245,166,35,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          {/* Content */}
+          <div style={{ position: 'relative', padding: '48px 56px', maxWidth: 600 }}>
+            <h2 style={{
+              fontFamily: 'Bebas Neue', fontSize: 42, letterSpacing: 1, lineHeight: 1,
+              marginBottom: 14,
+              background: 'linear-gradient(90deg, #F5A623, #FFC93C)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+            }}>
+              Become a Member of BTSA
+            </h2>
+            <p style={{ color: '#aaa', fontSize: 14, lineHeight: 1.7, marginBottom: 28, fontWeight: 300 }}>
+              By becoming a member you join an official Tamil sports club in Belgium and can participate in tournaments across Football, Cricket and Volleyball. Individual athletes can also register and compete in Athletics events.
+            </p>
+            <Link href="/team-login" style={{ textDecoration: 'none' }}>
+              <button style={{
+                background: 'linear-gradient(90deg, #F5A623, #FFC93C)',
+                color: '#000', padding: '12px 28px',
+                fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 14, letterSpacing: 1,
+                border: 'none', cursor: 'pointer', borderRadius: 24,
+              }}>
+                More Info
+              </button>
+            </Link>
+          </div>
+          {/* Logo rechts (zichtbaar) */}
+          <div style={{ position: 'absolute', right: 48, top: '50%', transform: 'translateY(-50%)' }}>
+            <Image src="/btsa-logo.png" alt="BTSA" width={140} height={140} style={{ borderRadius: '50%', opacity: 0.7, filter: 'drop-shadow(0 0 24px rgba(245,166,35,0.3))' }} />
+          </div>
+        </div>
+      </div>
+
       {/* ── MAIN CONTENT: News feed + Sidebar ── */}
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 40px', display: 'grid', gridTemplateColumns: '1fr 340px', gap: 40 }}>
 
