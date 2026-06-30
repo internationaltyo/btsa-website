@@ -45,44 +45,86 @@ export default function HomePage() {
   return (
     <div style={{ minHeight: '100vh', background: '#0A0A0A', color: '#F2F2F0', fontFamily: 'Exo 2, sans-serif' }}>
 
-      {/* ── TOP BAR ── */}
-      <div style={{ background: '#000', borderBottom: '1px solid #1a1a1a', padding: '0 40px', height: 36, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 2, color: '#555' }}>
-          BELGIUM TAMIL SPORTS ASSOCIATION — OFFICIEEL PLATFORM
+      {/* ── TOP BAR (Barcelona-stijl: gecentreerde tekst + rechts login/knop) ── */}
+      <div style={{ background: '#0f1420', padding: '0 32px', height: 44, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* Left: leeg voor balans */}
+        <div style={{ width: 200 }} />
+        {/* Center: promo tekst */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, letterSpacing: 0.5 }}>
+          <span style={{ fontSize: 16 }}>🏆</span>
+          <span style={{ color: '#ccc' }}>Schrijf jouw club in voor de </span>
+          <span style={{ color: 'var(--accent)' }}>BTSA ZOMERKAMPIOENSCHAP 2025</span>
         </div>
-        <div style={{ display: 'flex', gap: 0 }}>
-          <Link href="/team-login" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 1.5, color: '#888', padding: '0 16px', borderLeft: '1px solid #1a1a1a', textDecoration: 'none' }}>TEAM PORTAL</Link>
-          <Link href="/admin" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 1.5, color: '#888', padding: '0 16px', borderLeft: '1px solid #1a1a1a', textDecoration: 'none' }}>ADMIN</Link>
+        {/* Right: login + knop */}
+        <div style={{ width: 200, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
+          <Link href="/team-login" style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, color: '#ccc', textDecoration: 'none', padding: '6px 14px' }}>
+            <span style={{ fontSize: 15 }}>👤</span> Login
+          </Link>
+          <Link href="/team-login" style={{ textDecoration: 'none' }}>
+            <button style={{ background: 'var(--red)', color: '#fff', padding: '7px 18px', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, letterSpacing: 0.5, border: 'none', cursor: 'pointer', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Image src="/btsa-logo.png" alt="" width={16} height={16} style={{ borderRadius: '50%' }} />
+              Team Portal
+            </button>
+          </Link>
         </div>
       </div>
 
-      {/* ── MAIN NAVBAR ── */}
-      <nav style={{ background: '#111', borderBottom: '3px solid var(--accent)', padding: '0 40px', display: 'flex', alignItems: 'center', gap: 0, height: 64, position: 'sticky', top: 0, zIndex: 100 }}>
+      {/* ── MAIN NAVBAR (Barcelona-stijl: wit/licht, logo links, links gesplitst) ── */}
+      <nav style={{ background: '#fff', padding: '0 32px', display: 'flex', alignItems: 'center', height: 72, position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
         {/* Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', marginRight: 32, paddingRight: 32, borderRight: '1px solid #2a2a2a' }}>
-          <Image src="/btsa-logo.png" alt="BTSA" width={40} height={40} style={{ borderRadius: '50%' }} />
-          <div>
-            <div style={{ fontFamily: 'Bebas Neue', fontSize: 20, color: 'var(--accent)', letterSpacing: 3, lineHeight: 1 }}>BTSA</div>
-            <div style={{ fontSize: 8, color: '#555', letterSpacing: 1.5, fontFamily: 'Rajdhani', fontWeight: 600 }}>BELGIUM TAMIL SPORTS</div>
-          </div>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', marginRight: 32, flexShrink: 0 }}>
+          <Image src="/btsa-logo.png" alt="BTSA" width={52} height={52} style={{ borderRadius: '50%' }} />
         </Link>
-        {/* Nav links */}
+
+        {/* Links: sport navigatie */}
         <div style={{ display: 'flex', flex: 1, gap: 0 }}>
-          {navLinks.map(l => (
-            <Link key={l.href} href={l.href}
-              style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, letterSpacing: 1.5, color: '#aaa', padding: '0 20px', height: 64, display: 'flex', alignItems: 'center', textDecoration: 'none', borderBottom: '3px solid transparent', transition: 'color 0.15s, border-color 0.15s' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#fff'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'var(--accent)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#aaa'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
+          {[
+            { label: 'FOOTBALL',   href: '/football' },
+            { label: 'CRICKET',    href: '/cricket' },
+            { label: 'VOLLEYBALL', href: '/volleyball' },
+            { label: 'ATHLETICS',  href: '/athletics' },
+          ].map(l => (
+            <Link key={l.href} href={l.href} style={{
+              fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 14, letterSpacing: 1,
+              color: '#111', padding: '0 18px', height: 72, display: 'flex', alignItems: 'center',
+              textDecoration: 'none', borderBottom: '3px solid transparent',
+              transition: 'color 0.15s, border-color 0.15s',
+            }}
+              onMouseEnter={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.color = '#A50044'; a.style.borderBottomColor = '#A50044' }}
+              onMouseLeave={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.color = '#111'; a.style.borderBottomColor = 'transparent' }}
             >{l.label}</Link>
           ))}
         </div>
-        {/* Live badge */}
-        {liveMatches.length > 0 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(226,35,26,0.12)', border: '1px solid rgba(226,35,26,0.3)', borderRadius: 4, padding: '6px 14px' }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--red)', animation: 'pulse 1s infinite', display: 'inline-block' }} />
-            <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 12, color: 'var(--red)', letterSpacing: 1 }}>{liveMatches.length} LIVE</span>
-          </div>
-        )}
+
+        {/* Rechts: extra links + zoek */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+          {[
+            { label: 'RANKINGS', href: '/football/rankings' },
+            { label: 'CLUBS',    href: '/football/teams' },
+            { label: 'ADMIN',    href: '/admin' },
+          ].map(l => (
+            <Link key={l.href} href={l.href} style={{
+              fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 14, letterSpacing: 1,
+              color: '#111', padding: '0 18px', height: 72, display: 'flex', alignItems: 'center',
+              textDecoration: 'none', borderBottom: '3px solid transparent',
+              transition: 'color 0.15s, border-color 0.15s',
+            }}
+              onMouseEnter={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.color = '#A50044'; a.style.borderBottomColor = '#A50044' }}
+              onMouseLeave={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.color = '#111'; a.style.borderBottomColor = 'transparent' }}
+            >{l.label}</Link>
+          ))}
+          {/* Zoekicoon */}
+          <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0 16px', height: 72, display: 'flex', alignItems: 'center', color: '#111', fontSize: 20 }}>
+            🔍
+          </button>
+          {/* Live badge */}
+          {liveMatches.length > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#A50044', borderRadius: 4, padding: '6px 12px', marginLeft: 8 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#fff', animation: 'pulse 1s infinite', display: 'inline-block' }} />
+              <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 12, color: '#fff', letterSpacing: 1 }}>{liveMatches.length} LIVE</span>
+            </div>
+          )}
+        </div>
       </nav>
 
       {/* ── HERO ── */}
