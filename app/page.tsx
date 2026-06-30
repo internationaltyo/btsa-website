@@ -49,11 +49,11 @@ export default function HomePage() {
       <div style={{ background: '#0f1420', padding: '0 32px', height: 44, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Left: leeg voor balans */}
         <div style={{ width: 200 }} />
-        {/* Center: promo tekst */}
+        {/* Center: platform info */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, letterSpacing: 0.5 }}>
-          <span style={{ fontSize: 16 }}>🏆</span>
-          <span style={{ color: '#ccc' }}>Schrijf jouw club in voor de </span>
-          <span style={{ color: 'var(--accent)' }}>BTSA ZOMERKAMPIOENSCHAP 2025</span>
+          <span style={{ color: '#ccc' }}>BELGIUM TAMIL SPORTS ASSOCIATION</span>
+          <span style={{ color: '#333', margin: '0 4px' }}>·</span>
+          <span style={{ color: 'var(--accent)' }}>FOOTBALL · CRICKET · VOLLEYBALL · ATHLETICS</span>
         </div>
         {/* Right: login + knop */}
         <div style={{ width: 200, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
