@@ -58,14 +58,17 @@ type Registration = { id: string; first_name: string; date_of_birth: string; gen
 export default function AthleticsPage() {
   const [step, setStep] = useState<'form' | 'sports' | 'done'>('form')
   const [firstName, setFirstName] = useState('')
-  const [birthDate, setBirthDate] = useState('')
+  const [birthDay, setBirthDay] = useState('')
+  const [birthMonth, setBirthMonth] = useState('')
+  const [birthYear2, setBirthYear2] = useState('')
   const [gender, setGender] = useState<'male' | 'female' | ''>('')
   const [selected, setSelected] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [registrations, setRegistrations] = useState<Registration[]>([])
 
-  const birthYear = birthDate ? new Date(birthDate).getFullYear() : null
+  const birthDate = birthDay && birthMonth && birthYear2 ? `${birthYear2}-${birthMonth.padStart(2,'0')}-${birthDay.padStart(2,'0')}` : ''
+  const birthYear = birthYear2 ? parseInt(birthYear2) : null
   const group = birthYear && gender ? getGroup(birthYear, gender as 'male' | 'female') : null
 
   useEffect(() => {
@@ -80,7 +83,7 @@ export default function AthleticsPage() {
 
   function handleNext(e: React.FormEvent) {
     e.preventDefault()
-    if (!firstName || !birthDate || !gender) { setError('Vul alle velden in.'); return }
+    if (!firstName || !birthDay || !birthMonth || !birthYear2 || !gender) { setError('Vul alle velden in.'); return }
     if (!group) { setError(`Geboortejaar ${birthYear} valt buiten de beschikbare leeftijdsgroepen.`); return }
     setError('')
     setStep('sports')
@@ -182,8 +185,25 @@ export default function AthleticsPage() {
                   <label style={{ display: 'block', marginBottom: 8, fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 11, letterSpacing: 2, color: C.muted }}>
                     பிறந்த தேதி / GEBOORTEDATUM *
                   </label>
-                  <input type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} required max="2023-12-31" min="1950-01-01"
-                    style={{ width: '100%', padding: '14px 16px', border: `2px solid ${C.border}`, borderRadius: 4, fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 15, color: C.text, background: C.white, outline: 'none', boxSizing: 'border-box' }} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1.5fr', gap: 8 }}>
+                    <select value={birthDay} onChange={e => setBirthDay(e.target.value)}
+                      style={{ padding: '14px 10px', border: `2px solid ${C.border}`, borderRadius: 4, fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 15, color: birthDay ? C.text : C.muted, background: C.white, outline: 'none' }}>
+                      <option value="">Dag</option>
+                      {Array.from({length:31},(_,i)=>i+1).map(d=><option key={d} value={String(d)}>{String(d).padStart(2,'0')}</option>)}
+                    </select>
+                    <select value={birthMonth} onChange={e => setBirthMonth(e.target.value)}
+                      style={{ padding: '14px 10px', border: `2px solid ${C.border}`, borderRadius: 4, fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 15, color: birthMonth ? C.text : C.muted, background: C.white, outline: 'none' }}>
+                      <option value="">Maand</option>
+                      {['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'].map((m,i)=>(
+                        <option key={i+1} value={String(i+1)}>{m}</option>
+                      ))}
+                    </select>
+                    <select value={birthYear2} onChange={e => setBirthYear2(e.target.value)}
+                      style={{ padding: '14px 10px', border: `2px solid ${C.border}`, borderRadius: 4, fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 15, color: birthYear2 ? C.text : C.muted, background: C.white, outline: 'none' }}>
+                      <option value="">Jaar</option>
+                      {Array.from({length:2024-1950+1},(_,i)=>2024-i).map(y=><option key={y} value={String(y)}>{y}</option>)}
+                    </select>
+                  </div>
                   {birthYear && group && (
                     <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: '#FFF8EC', border: `1px solid ${C.gold}`, borderRadius: 4 }}>
                       <span style={{ color: C.gold, fontSize: 16 }}>✓</span>
@@ -251,7 +271,7 @@ export default function AthleticsPage() {
                     <span style={{ fontFamily: 'Rajdhani, sans-serif', fontSize: 13, color: C.muted }}>{firstName} · {gender === 'male' ? 'Man' : 'Vrouw'}</span>
                   </div>
                 </div>
-                <button onClick={() => { setStep('form'); setSelected([]) }} style={{
+                <button onClick={() => { setStep('form'); setSelected([]) }} type="button" style={{
                   background: C.light, border: `1px solid ${C.border}`, color: C.muted, padding: '8px 16px',
                   cursor: 'pointer', fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 12, borderRadius: 4,
                 }}>← Terug</button>
@@ -333,7 +353,7 @@ export default function AthleticsPage() {
                   </div>
                 ))}
               </div>
-              <button onClick={() => { setStep('form'); setFirstName(''); setBirthDate(''); setGender(''); setSelected([]) }}
+              <button onClick={() => { setStep('form'); setFirstName(''); setBirthDay(''); setBirthMonth(''); setBirthYear2(''); setGender(''); setSelected([]) }}
                 style={{ background: C.dark, color: C.white, padding: '14px 32px', fontFamily: 'Bebas Neue, sans-serif', fontSize: 16, letterSpacing: 2, border: 'none', borderRadius: 4, cursor: 'pointer' }}>
                 + NIEUWE INSCHRIJVING
               </button>
