@@ -7,18 +7,18 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 
 const sports = [
-  { slug: 'football',   label: 'Football',   emoji: '⚽' },
-  { slug: 'cricket',    label: 'Cricket',     emoji: '🏏' },
-  { slug: 'volleyball', label: 'Volleyball',  emoji: '🏐' },
-  { slug: 'athletics',  label: 'Athletics',   emoji: '🏃' },
+  { slug: 'football',   label: 'Voetbal',    emoji: '⚽' },
+  { slug: 'cricket',    label: 'Cricket',    emoji: '🏏' },
+  { slug: 'volleyball', label: 'Volleyball', emoji: '🏐' },
+  { slug: 'athletics',  label: 'Atletiek',   emoji: '🏃' },
 ]
 
 const navLinks = [
-  { label: 'Football',   href: '/football' },
+  { label: 'Voetbal',    href: '/football' },
   { label: 'Cricket',    href: '/cricket' },
   { label: 'Volleyball', href: '/volleyball' },
-  { label: 'Athletics',  href: '/athletics' },
-  { label: 'Rankings',   href: '/football/rankings' },
+  { label: 'Atletiek',   href: '/athletics' },
+  { label: 'Ranglijst',  href: '/rankings' },
 ]
 
 export default function HomePage() {
@@ -79,7 +79,7 @@ export default function HomePage() {
               </Link>
               <Link href="/team-login" style={{ textDecoration: 'none' }}>
                 <button style={{ background: 'transparent', color: '#fff', padding: '14px 32px', fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2, border: '1px solid #333', cursor: 'pointer', marginLeft: -1 }}>
-                  TEAM LOGIN
+                  TEAM PORTAAL
                 </button>
               </Link>
             </div>
@@ -146,10 +146,10 @@ export default function HomePage() {
               background: 'linear-gradient(90deg, #F5A623, #FFC93C)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>
-              Become a Member of BTSA
+              Word Lid van BTSA
             </h2>
             <p style={{ color: '#aaa', fontSize: 14, lineHeight: 1.7, marginBottom: 28, fontWeight: 300 }}>
-              By becoming a member you join an official Tamil sports club in Belgium and can participate in tournaments across Football, Cricket and Volleyball. Individual athletes can also register and compete in Athletics events.
+              Door lid te worden sluit je je aan bij een officiële Tamilse sportclub in België en kun je deelnemen aan toernooien in Voetbal, Cricket en Volleyball. Individuele atleten kunnen zich ook inschrijven voor Atletiek.
             </p>
             <Link href="/team-login" style={{ textDecoration: 'none' }}>
               <button style={{
@@ -158,7 +158,7 @@ export default function HomePage() {
                 fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 14, letterSpacing: 1,
                 border: 'none', cursor: 'pointer', borderRadius: 24,
               }}>
-                More Info
+                Meer Info
               </button>
             </Link>
           </div>
@@ -284,13 +284,13 @@ export default function HomePage() {
                 />
                 {/* Kleur gradient overlay */}
                 <div style={{ position: 'absolute', inset: 0, background: gradient, zIndex: 1 }} />
-                {/* NEW badge */}
+                {/* NIEUW badge */}
                 <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 3, background: 'var(--accent)', color: '#000', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: 11, letterSpacing: 1, padding: '3px 10px', borderRadius: 20 }}>
-                  NEW
+                  NIEUW
                 </div>
                 {/* Bottom gradient overlay */}
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.75), transparent)', padding: '32px 14px 14px', zIndex: 2 }}>
-                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#fff', letterSpacing: 0.5 }}>FOOTBALL</div>
+                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#fff', letterSpacing: 0.5 }}>VOETBAL</div>
                 </div>
               </div>
             ))}
@@ -407,7 +407,7 @@ export default function HomePage() {
                 <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '11px 0', borderBottom: i < 7 ? '1px solid #1a1a1a' : 'none' }}>
                   <span style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#333', minWidth: 24 }}>{String(i + 1).padStart(2, '0')}</span>
                   <span style={{ fontSize: 13, fontWeight: 600, flex: 1 }}>{c.name}</span>
-                  <span style={{ fontSize: 10, fontFamily: 'Rajdhani', fontWeight: 700, color: sportColor[c.sport] ?? '#555', letterSpacing: 1 }}>{c.sport.toUpperCase()}</span>
+                  <span style={{ fontSize: 10, fontFamily: 'Rajdhani', fontWeight: 700, color: sportColor[c.sport] ?? '#555', letterSpacing: 1 }}>{({'football':'VOETBAL','athletics':'ATLETIEK'} as any)[c.sport] ?? c.sport.toUpperCase()}</span>
                 </div>
               ))}
             </div>
@@ -451,7 +451,7 @@ export default function HomePage() {
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
                     <span style={{ width: 8, height: 8, borderRadius: '50%', background: t.status === 'ongoing' ? 'var(--green)' : t.status === 'finished' ? '#444' : 'var(--accent)', display: 'inline-block' }} />
-                    <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: '#555', letterSpacing: 1.5 }}>{t.sport?.toUpperCase()}</span>
+                    <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: '#555', letterSpacing: 1.5 }}>{({'football':'VOETBAL','athletics':'ATLETIEK'} as any)[t.sport] ?? t.sport?.toUpperCase()}</span>
                   </div>
                   <div style={{ fontFamily: 'Bebas Neue', fontSize: 20, lineHeight: 1.1, marginBottom: 8 }}>{t.name}</div>
                   <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 11, color: '#555', letterSpacing: 0.5 }}>{t.start_date ?? '—'}</div>
@@ -476,7 +476,7 @@ export default function HomePage() {
           {sports.map(s => (
             <div key={s.slug}>
               <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, color: '#555', letterSpacing: 2, marginBottom: 12 }}>{s.label.toUpperCase()}</div>
-              {['Teams', 'Wedstrijden', 'Rankings', 'Toernooien'].map(p => (
+              {['Teams', 'Wedstrijden', 'Ranglijst', 'Toernooien'].map(p => (
                 <div key={p} style={{ marginBottom: 8 }}>
                   <Link href={`/${s.slug}`} style={{ fontSize: 12, color: '#444', textDecoration: 'none' }}>{p}</Link>
                 </div>
