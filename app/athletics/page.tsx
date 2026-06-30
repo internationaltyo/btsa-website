@@ -371,16 +371,18 @@ export default function AthleticsPage() {
                 {ag.genders.map(g => (
                   <div key={g}>
                     {/* Gender label */}
-                    <div style={{
-                      padding: '10px 16px', marginBottom: 2,
-                      background: g === 'male' ? C.blue : '#BE185D',
-                      display: 'flex', alignItems: 'center', gap: 8,
-                    }}>
-                      <span style={{ fontSize: 16, color: C.white }}>{g === 'male' ? '♂' : '♀'}</span>
-                      <span style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 16, color: C.white, letterSpacing: 2 }}>
-                        {g === 'male' ? 'ஆண் · MAN' : 'பெண் · VROUW'}
-                      </span>
-                    </div>
+                    {(() => {
+                      const isAdult = ag.key === 'g9m' || ag.key === 'g9f'
+                      const taNl = g === 'male'
+                        ? (isAdult ? 'ஆண் · MAN' : 'ஆண் · JONGEN')
+                        : (isAdult ? 'பெண் · VROUW' : 'பெண் · MEISJE')
+                      return (
+                        <div style={{ padding: '10px 16px', marginBottom: 2, background: g === 'male' ? C.blue : '#BE185D', display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <span style={{ fontSize: 16, color: C.white }}>{g === 'male' ? '♂' : '♀'}</span>
+                          <span style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 16, color: C.white, letterSpacing: 2 }}>{taNl}</span>
+                        </div>
+                      )
+                    })()}
 
                     {/* Sports list */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
