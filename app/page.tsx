@@ -262,33 +262,25 @@ export default function HomePage() {
         <div style={{ position: 'relative', maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
           {/* Scroll container */}
           <div ref={photosRef} style={{ display: 'flex', gap: 12, overflowX: 'auto', scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}>
-            {[
-              { label: 'Football', sport: 'football', color: 'linear-gradient(135deg, #1a0a0a, #4a0a0a)', emoji: '⚽' },
-              { label: 'Cricket', sport: 'cricket', color: 'linear-gradient(135deg, #1a120a, #4a2a0a)', emoji: '🏏' },
-              { label: 'Volleyball', sport: 'volleyball', color: 'linear-gradient(135deg, #0a1a0a, #0a3a0a)', emoji: '🏐' },
-              { label: 'Athletics', sport: 'athletics', color: 'linear-gradient(135deg, #0a0a1a, #0a0a4a)', emoji: '🏃' },
-              { label: 'Football', sport: 'football', color: 'linear-gradient(135deg, #2a0a1a, #5a0a2a)', emoji: '⚽' },
-              { label: 'Cricket', sport: 'cricket', color: 'linear-gradient(135deg, #1a1a0a, #3a3a0a)', emoji: '🏏' },
-              { label: 'Volleyball', sport: 'volleyball', color: 'linear-gradient(135deg, #0a1a1a, #0a3a3a)', emoji: '🏐' },
-              { label: 'BTSA', sport: 'football', color: 'linear-gradient(135deg, #0D1128, #1e2a4a)', emoji: '🏆' },
-            ].map((item, i) => (
-              <div key={i} style={{ flexShrink: 0, scrollSnapAlign: 'start', width: 200, height: 280, borderRadius: 12, overflow: 'hidden', position: 'relative', cursor: 'pointer', background: item.color }}>
+            {[1,2,3,4,5,6,7,8,9,10,11,12,13].map((n) => (
+              <div key={n} style={{ flexShrink: 0, scrollSnapAlign: 'start', width: 200, height: 280, borderRadius: 12, overflow: 'hidden', position: 'relative', cursor: 'pointer', background: '#111' }}>
+                {/* Echte foto */}
+                <Image
+                  src={`/01_Players photo/${n}.jpg`}
+                  alt={`BTSA foto ${n}`}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
                 {/* NEW badge */}
                 <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 2, background: 'var(--accent)', color: '#000', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: 11, letterSpacing: 1, padding: '3px 10px', borderRadius: 20 }}>
                   NEW
                 </div>
-                {/* Emoji decoratie midden */}
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 64, opacity: 0.3 }}>
-                  {item.emoji}
-                </div>
-                {/* Bottom overlay + label */}
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85), transparent)', padding: '32px 14px 14px' }}>
-                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 16, color: '#fff', letterSpacing: 0.5 }}>{item.label}</div>
+                {/* Bottom gradient overlay */}
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)', padding: '32px 14px 14px', zIndex: 1 }}>
+                  <div style={{ fontFamily: 'Bebas Neue', fontSize: 14, color: '#fff', letterSpacing: 0.5 }}>BTSA</div>
                 </div>
               </div>
             ))}
-            {/* Lege ruimte rechts voor de pijl */}
-            <div style={{ flexShrink: 0, width: 20 }} />
           </div>
 
           {/* Pijl rechts — exact zoals Barcelona */}
