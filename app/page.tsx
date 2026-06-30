@@ -72,7 +72,7 @@ export default function HomePage() {
               Volg competities, bekijk live scores, en ontdek spelers en clubs van alle Tamil sportverenigingen in België.
             </p>
             <div style={{ display: 'flex', gap: 0 }}>
-              <Link href="/football" style={{ textDecoration: 'none' }}>
+              <Link href="/competitions" style={{ textDecoration: 'none' }}>
                 <button style={{ background: 'var(--accent)', color: '#000', padding: '14px 32px', fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2, border: 'none', cursor: 'pointer' }}>
                   COMPETITIES
                 </button>
