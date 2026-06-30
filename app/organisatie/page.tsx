@@ -3,42 +3,42 @@ export const dynamic = 'force-dynamic'
 
 // ── Pas deze data aan met echte namen en periodes ──
 const BESTUUR = [
-  { naam: 'Voorzitter',     rol: 'Voorzitter',        periode: '2024 – 2026', kleur: '#A50044' },
-  { naam: 'Secretaris',     rol: 'Secretaris',         periode: '2024 – 2026', kleur: '#004D98' },
-  { naam: 'Penningmeester', rol: 'Penningmeester',     periode: '2024 – 2026', kleur: '#004D98' },
+  { naam: 'Voorzitter',     rol: 'Voorzitter',        periode: '2026 – 2028', kleur: '#A50044' },
+  { naam: 'Secretaris',     rol: 'Secretaris',         periode: '2026 – 2028', kleur: '#004D98' },
+  { naam: 'Penningmeester', rol: 'Penningmeester',     periode: '2026 – 2028', kleur: '#004D98' },
 ]
 
 const SPORTEN = [
   {
     sport: 'Voetbal', emoji: '⚽', kleur: '#A50044',
-    verantwoordelijke: { naam: 'Naam',  rol: 'Verantwoordelijke Voetbal', periode: '2024 – 2026' },
+    verantwoordelijke: { naam: 'Naam',  rol: 'Verantwoordelijke Voetbal', periode: '2026 – 2028' },
     uitvoerenden: [
-      { naam: 'Naam', rol: 'Uitvoerend Voetbal', periode: '2024 – 2026' },
-      { naam: 'Naam', rol: 'Uitvoerend Voetbal', periode: '2024 – 2026' },
+      { naam: 'Naam', rol: 'Uitvoerend Voetbal', periode: '2026 – 2028' },
+      { naam: 'Naam', rol: 'Uitvoerend Voetbal', periode: '2026 – 2028' },
     ],
   },
   {
     sport: 'Cricket', emoji: '🏏', kleur: '#F5A623',
-    verantwoordelijke: { naam: 'Naam', rol: 'Verantwoordelijke Cricket', periode: '2024 – 2026' },
+    verantwoordelijke: { naam: 'Naam', rol: 'Verantwoordelijke Cricket', periode: '2026 – 2028' },
     uitvoerenden: [
-      { naam: 'Naam', rol: 'Uitvoerend Cricket', periode: '2024 – 2026' },
-      { naam: 'Naam', rol: 'Uitvoerend Cricket', periode: '2024 – 2026' },
+      { naam: 'Naam', rol: 'Uitvoerend Cricket', periode: '2026 – 2028' },
+      { naam: 'Naam', rol: 'Uitvoerend Cricket', periode: '2026 – 2028' },
     ],
   },
   {
     sport: 'Volleyball', emoji: '🏐', kleur: '#22C55E',
-    verantwoordelijke: { naam: 'Naam', rol: 'Verantwoordelijke Volleyball', periode: '2024 – 2026' },
+    verantwoordelijke: { naam: 'Naam', rol: 'Verantwoordelijke Volleyball', periode: '2026 – 2028' },
     uitvoerenden: [
-      { naam: 'Naam', rol: 'Uitvoerend Volleyball', periode: '2024 – 2026' },
-      { naam: 'Naam', rol: 'Uitvoerend Volleyball', periode: '2024 – 2026' },
+      { naam: 'Naam', rol: 'Uitvoerend Volleyball', periode: '2026 – 2028' },
+      { naam: 'Naam', rol: 'Uitvoerend Volleyball', periode: '2026 – 2028' },
     ],
   },
   {
     sport: 'Atletiek', emoji: '🏃', kleur: '#00BFFF',
-    verantwoordelijke: { naam: 'Naam', rol: 'Verantwoordelijke Atletiek', periode: '2024 – 2026' },
+    verantwoordelijke: { naam: 'Naam', rol: 'Verantwoordelijke Atletiek', periode: '2026 – 2028' },
     uitvoerenden: [
-      { naam: 'Naam', rol: 'Uitvoerend Atletiek', periode: '2024 – 2026' },
-      { naam: 'Naam', rol: 'Uitvoerend Atletiek', periode: '2024 – 2026' },
+      { naam: 'Naam', rol: 'Uitvoerend Atletiek', periode: '2026 – 2028' },
+      { naam: 'Naam', rol: 'Uitvoerend Atletiek', periode: '2026 – 2028' },
     ],
   },
 ]
