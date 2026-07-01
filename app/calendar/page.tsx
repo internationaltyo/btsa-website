@@ -9,7 +9,14 @@ const SPORT_COLOR: Record<string, string> = {
   football: '#E2231A', cricket: '#F5A623', volleyball: '#22C55E', athletics: '#00BFFF', tcc: '#7C3AED',
 }
 const SPORT_EMOJI: Record<string, string> = {
-  football: '⚽', cricket: '🏏', volleyball: '🏐', athletics: '🏃', tcc: '🎪',
+  football: '⚽', cricket: '🏏', volleyball: '🏐', athletics: '🏃', tcc: '',
+}
+
+function SportIcon({ sport, size = 14 }: { sport: string; size?: number }) {
+  if (sport === 'tcc') {
+    return <img src="/05_Tamileelam.png" alt="TCC" width={size} height={size} style={{ display: 'inline', verticalAlign: 'middle', objectFit: 'contain' }} />
+  }
+  return <span>{SPORT_EMOJI[sport] ?? '🏆'}</span>
 }
 const SPORT_LABEL: Record<string, string> = {
   football: 'Football', cricket: 'Cricket', volleyball: 'Volleyball', athletics: 'Athletics', tcc: 'TCC Events',
@@ -166,7 +173,7 @@ export default function CalendarPage() {
                             fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 10, color: '#fff',
                             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                           }}>
-                            {SPORT_EMOJI[t.sport]} {t.name}
+                            <SportIcon sport={t.sport} size={10} /> {t.name}
                           </div>
                         ))}
                         {ts.length > 2 && (
@@ -195,7 +202,7 @@ export default function CalendarPage() {
                     <div style={{ flex: 1 }}>
                       <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 18, color: '#111827', letterSpacing: 0.5 }}>{t.name}</div>
                       <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 12, color: '#6B7280' }}>
-                        {SPORT_EMOJI[t.sport]} {t.sport.toUpperCase()} · {(t as any).clubs?.name ?? '—'} {t.location ? `· 📍 ${t.location}` : ''}
+                        <SportIcon sport={t.sport} size={12} /> {t.sport.toUpperCase()} · {(t as any).clubs?.name ?? '—'} {t.location ? `· 📍 ${t.location}` : ''}
                       </div>
                     </div>
                     <Link href={`/${t.sport}/tournament/${t.id}`} style={{ textDecoration: 'none' }}>
@@ -241,7 +248,7 @@ export default function CalendarPage() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 15, color: '#111827', letterSpacing: 0.5, lineHeight: 1.2, marginBottom: 2 }}>{t.name}</div>
                       <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 11, color: '#9CA3AF' }}>
-                        {SPORT_EMOJI[t.sport]} {(t as any).clubs?.name ?? '—'}
+                        <SportIcon sport={t.sport} size={11} /> {(t as any).clubs?.name ?? '—'}
                       </div>
                     </div>
                   </div>
@@ -257,7 +264,7 @@ export default function CalendarPage() {
               <div key={sport} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                 <div style={{ width: 12, height: 12, borderRadius: 3, background: color, flexShrink: 0 }} />
                 <span style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 13, color: '#374151' }}>
-                  {SPORT_EMOJI[sport]} {SPORT_LABEL[sport]}
+                  <SportIcon sport={sport} size={13} /> {SPORT_LABEL[sport]}
                 </span>
               </div>
             ))}
