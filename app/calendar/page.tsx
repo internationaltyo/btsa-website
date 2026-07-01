@@ -6,10 +6,13 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
 const SPORT_COLOR: Record<string, string> = {
-  football: '#E2231A', cricket: '#F5A623', volleyball: '#22C55E', athletics: '#00BFFF',
+  football: '#E2231A', cricket: '#F5A623', volleyball: '#22C55E', athletics: '#00BFFF', tcc: '#7C3AED',
 }
 const SPORT_EMOJI: Record<string, string> = {
-  football: '⚽', cricket: '🏏', volleyball: '🏐', athletics: '🏃',
+  football: '⚽', cricket: '🏏', volleyball: '🏐', athletics: '🏃', tcc: '🎪',
+}
+const SPORT_LABEL: Record<string, string> = {
+  football: 'Football', cricket: 'Cricket', volleyball: 'Volleyball', athletics: 'Athletics', tcc: 'TCC Events',
 }
 const MAANDEN = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December']
 const DAGEN = ['Ma','Di','Wo','Do','Vr','Za','Zo']
@@ -254,7 +257,7 @@ export default function CalendarPage() {
               <div key={sport} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                 <div style={{ width: 12, height: 12, borderRadius: 3, background: color, flexShrink: 0 }} />
                 <span style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 13, color: '#374151' }}>
-                  {SPORT_EMOJI[sport]} {sport.charAt(0).toUpperCase() + sport.slice(1)}
+                  {SPORT_EMOJI[sport]} {SPORT_LABEL[sport]}
                 </span>
               </div>
             ))}
