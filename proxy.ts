@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function proxy(request: NextRequest) {
+  // GEO RESTRICTION DISABLED — enable when website is ready
+  return NextResponse.next()
+
   const country = request.headers.get('x-vercel-ip-country')
   const isLocalhost = request.headers.get('host')?.includes('localhost')
 
-  // Allow local development + Belgian visitors
   if (isLocalhost || !country || country === 'BE') {
     return NextResponse.next()
   }
 
-  // Block everyone else
   return new NextResponse(
     `<!DOCTYPE html>
 <html lang="nl">
