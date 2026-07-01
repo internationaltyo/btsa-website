@@ -205,4 +205,19 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   .tournaments-section { padding: 32px 0 !important; }
   .tournaments-header  { padding: 0 16px 20px !important; }
   .tournaments-scroll  { padding-left: 16px !important; }
+
+  /* Sport page */
+  .sport-subnav { padding: 0 12px !important; }
+  .sport-subnav-link { padding: 0 10px !important; font-size: 11px !important; }
+  .sport-header { padding: 20px 16px 16px !important; }
+  .sport-header h1 { font-size: 44px !important; }
+  .sport-header-stats { display: none !important; }
+  .sport-content { padding: 12px !important; }
+  .sport-cols { grid-template-columns: 1fr !important; }
+  .sport-cols-inner { padding: 20px 16px !important; }
+
+  /* Rankings page */
+  .rankings-header { padding: 20px 16px 0 !important; }
+  .rankings-content { padding: 16px !important; }
+  .rankings-tabs button { padding: 10px 14px !important; font-size: 12px !important; }
 }

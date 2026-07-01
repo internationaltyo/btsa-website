@@ -34,13 +34,13 @@ export default function RankingsPage() {
     <div style={{ minHeight: '100vh' }}>
 
       {/* Header */}
-      <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: isMobile ? '24px 16px 0' : '40px 40px 0' }}>
+      <div className="rankings-header" style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: '40px 40px 0' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--accent)', marginBottom: 8 }}>BTSA</div>
           <h1 style={{ fontFamily: 'Bebas Neue', fontSize: 56, lineHeight: 0.95, marginBottom: 32 }}>RANGLIJST</h1>
 
           {/* Sport tabs */}
-          <div style={{ display: 'flex', gap: 0 }}>
+          <div className="rankings-tabs" style={{ display: 'flex', gap: 0, overflowX: 'auto' }}>
             {SPORTS.map(s => (
               <button key={s.key} onClick={() => setActiveSport(s.key)} style={{
                 padding: '14px 28px',
@@ -58,7 +58,7 @@ export default function RankingsPage() {
       </div>
 
       {/* Table */}
-      <div style={{ maxWidth: 1000, margin: '0 auto', padding: isMobile ? '16px' : '40px' }}>
+      <div className="rankings-content" style={{ maxWidth: 1000, margin: '0 auto', padding: '40px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <div style={{ width: 4, height: 32, background: sport.color }} />
           <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 28, margin: 0 }}>

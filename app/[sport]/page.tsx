@@ -6,7 +6,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { useMobile } from '../hooks/useMobile'
 
 const SPORT_EMOJI: Record<string, string> = {
   football: '⚽', cricket: '🏏', volleyball: '🏐', athletics: '🏃',
@@ -31,36 +30,36 @@ export default function SportPage() {
     supabase.from('tournaments').select('id,name,start_date,status').eq('sport', sport).eq('is_published', true).order('start_date', { ascending: false }).limit(6).then(({ data }) => setTournaments(data ?? []))
   }, [sport])
 
-  const isMobile = useMobile()
   const label = sport.charAt(0).toUpperCase() + sport.slice(1)
 
   return (
     <div style={{ minHeight: '100vh' }}>
-      {/* Nav */}
-      <nav style={{ background: '#000', padding: isMobile ? '0 16px' : '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, borderBottom: '1px solid var(--border)' }}>
+
+      {/* Sub-nav */}
+      <nav className="sport-subnav" style={{ background: '#000', padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, borderBottom: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', paddingRight: 20, borderRight: '1px solid var(--border)' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', paddingRight: 16, borderRight: '1px solid var(--border)' }}>
             <Image src="/btsa-logo.png" alt="BTSA" width={26} height={26} style={{ borderRadius: '50%' }} />
             <span style={{ fontFamily: 'Bebas Neue', fontSize: 16, letterSpacing: 2, color: 'var(--muted)' }}>BTSA</span>
           </Link>
-          <div style={{ paddingLeft: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, color: 'var(--muted)', letterSpacing: 2 }}>{num}</span>
-            <span style={{ fontFamily: 'Bebas Neue', fontSize: 18, color: 'var(--accent)', letterSpacing: 1 }}>{label}</span>
+          <div style={{ paddingLeft: 16, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ fontFamily: 'Bebas Neue', fontSize: 18, color: 'var(--accent)', letterSpacing: 1 }}>{emoji} {label}</span>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 0 }}>
           {['teams', 'matches', 'rankings'].map((p, i) => (
-            <Link key={p} href={`/${sport}/${p}`} style={{
+            <Link key={p} href={`/${sport}/${p}`} className="sport-subnav-link" style={{
               color: 'var(--muted)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 12,
-              letterSpacing: 1.5, textTransform: 'uppercase', padding: '0 18px',
+              letterSpacing: 1.5, textTransform: 'uppercase', padding: '0 16px',
               borderLeft: i > 0 ? '1px solid var(--border)' : 'none', textDecoration: 'none',
+              display: 'flex', alignItems: 'center', height: 56,
             }}>{p}</Link>
           ))}
         </div>
       </nav>
 
       {/* Page header */}
-      <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: isMobile ? '24px 16px 20px' : '40px 40px 32px' }}>
+      <div className="sport-header" style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: '40px 40px 32px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div>
             <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--muted)', marginBottom: 8 }}>{num} — BTSA</div>
@@ -68,7 +67,7 @@ export default function SportPage() {
               <span style={{ fontSize: 48 }}>{emoji}</span> {label}
             </h1>
           </div>
-          <div style={{ display: 'flex', gap: 32, paddingBottom: 8 }}>
+          <div className="sport-header-stats" style={{ display: 'flex', gap: 32, paddingBottom: 8 }}>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontFamily: 'Bebas Neue', fontSize: 32, color: 'var(--accent)', lineHeight: 1 }}>{clubs.length}</div>
               <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 10, letterSpacing: 1.5, color: 'var(--muted)' }}>CLUBS</div>
@@ -82,12 +81,12 @@ export default function SportPage() {
       </div>
 
       {/* Content */}
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '16px' : '40px 40px' }}>
+      <div className="sport-content" style={{ maxWidth: 1100, margin: '0 auto', padding: '40px' }}>
 
         {/* Two-column: clubs + matches */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.6fr', gap: 1, background: 'var(--border)', marginBottom: 1 }}>
+        <div className="sport-cols" style={{ display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: 1, background: 'var(--border)', marginBottom: 1 }}>
           {/* Clubs */}
-          <div style={{ background: 'var(--bg)', padding: '32px 28px' }}>
+          <div className="sport-cols-inner" style={{ background: 'var(--bg)', padding: '32px 28px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 20 }}>
               <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 22, letterSpacing: 1 }}>CLUBS</h3>
               <Link href={`/${sport}/teams`} style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 1, color: 'var(--muted)', textDecoration: 'none' }}>ALLE →</Link>
@@ -110,8 +109,8 @@ export default function SportPage() {
           </div>
 
           {/* Recent matches */}
-          <div style={{ background: 'var(--bg)' }}>
-            <div style={{ padding: '32px 28px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div className="sport-cols-inner" style={{ background: 'var(--bg)', padding: 0 }}>
+            <div style={{ padding: '28px 28px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
               <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 22, letterSpacing: 1 }}>RECENTE WEDSTRIJDEN</h3>
               <Link href={`/${sport}/matches`} style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 1, color: 'var(--muted)', textDecoration: 'none' }}>ALLE →</Link>
             </div>
@@ -149,17 +148,17 @@ export default function SportPage() {
 
         {/* Tournaments */}
         <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderTop: 'none' }}>
-          <div style={{ padding: '24px 28px 20px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div style={{ padding: '20px 24px 16px', borderBottom: '1px solid var(--border)' }}>
             <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 22, letterSpacing: 1 }}>TOERNOOIEN</h3>
           </div>
           {tournaments.length === 0 ? (
-            <p style={{ color: 'var(--muted)', fontSize: 13, padding: '20px 28px' }}>Geen gepubliceerde toernooien.</p>
+            <p style={{ color: 'var(--muted)', fontSize: 13, padding: '20px 24px' }}>Geen gepubliceerde toernooien.</p>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 0 }}>
-              {tournaments.map((t, i) => (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 0 }}>
+              {tournaments.map((t) => (
                 <Link key={t.id} href={`/${sport}/tournament/${t.id}`} style={{ textDecoration: 'none' }}>
                   <div style={{
-                    padding: '20px 24px', borderRight: '1px solid var(--border)',
+                    padding: '18px 20px', borderRight: '1px solid var(--border)',
                     borderBottom: '1px solid var(--border)',
                     transition: 'background 0.15s', cursor: 'pointer',
                   }}
@@ -167,7 +166,7 @@ export default function SportPage() {
                     onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = 'transparent'}
                   >
                     <span className={`badge badge-${t.status === 'ongoing' ? 'green' : t.status === 'finished' ? 'gray' : 'blue'}`} style={{ marginBottom: 8, display: 'inline-block' }}>{t.status}</span>
-                    <div style={{ fontFamily: 'Bebas Neue', fontSize: 20, letterSpacing: 0.5, marginBottom: 4, lineHeight: 1.1 }}>{t.name}</div>
+                    <div style={{ fontFamily: 'Bebas Neue', fontSize: 18, letterSpacing: 0.5, marginBottom: 4, lineHeight: 1.1 }}>{t.name}</div>
                     <div style={{ color: 'var(--muted)', fontSize: 11, fontFamily: 'Rajdhani', fontWeight: 600, letterSpacing: 1 }}>{t.start_date}</div>
                   </div>
                 </Link>
