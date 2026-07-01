@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { SPORT_INFO, type SportInfo } from './sportsInfo'
+import { useMobile } from '../hooks/useMobile'
 
 // Barcelona palette
 const C = {
@@ -110,13 +111,14 @@ export default function AthleticsPage() {
     }).map(r => r.first_name)
   }
 
+  const isMobile = useMobile()
   const totalRegistrations = registrations.length
 
   return (
     <div style={{ minHeight: '100vh', background: C.dark }}>
 
       {/* ── HERO HEADER (dark, Barcelona style) ── */}
-      <div style={{ background: C.dark, padding: '56px 48px 48px', borderBottom: `4px solid ${C.red}` }}>
+      <div style={{ background: C.dark, padding: isMobile ? '32px 20px 28px' : '56px 48px 48px', borderBottom: `4px solid ${C.red}` }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
             <div style={{ width: 4, height: 40, background: C.red }} />
@@ -142,7 +144,7 @@ export default function AthleticsPage() {
       </div>
 
       {/* ── REGISTRATION FORM (white background) ── */}
-      <div style={{ background: C.white, padding: '64px 48px' }}>
+      <div style={{ background: C.white, padding: isMobile ? '32px 16px' : '64px 48px' }}>
         <div style={{ maxWidth: 700, margin: '0 auto' }}>
 
           {/* Steps indicator */}
@@ -365,7 +367,7 @@ export default function AthleticsPage() {
       </div>
 
       {/* ── PARTICIPANTS LIST ── */}
-      <div style={{ padding: '72px 48px', background: C.dark }}>
+      <div style={{ padding: isMobile ? '40px 16px' : '72px 48px', background: C.dark }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 56 }}>
             <div>
@@ -389,7 +391,7 @@ export default function AthleticsPage() {
               </div>
 
               {/* Gender columns */}
-              <div style={{ display: 'grid', gridTemplateColumns: ag.genders.length === 2 ? '1fr 1fr' : '1fr', gap: 2 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: ag.genders.length === 2 && !isMobile ? '1fr 1fr' : '1fr', gap: 2 }}>
                 {ag.genders.map(g => (
                   <div key={g}>
                     {/* Gender label */}

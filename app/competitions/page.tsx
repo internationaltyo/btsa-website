@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { useMobile } from '../hooks/useMobile'
 
 const SPORT_EMOJI: Record<string, string> = {
   football: '⚽', cricket: '🏏', volleyball: '🏐', athletics: '🏃',
@@ -19,6 +20,7 @@ const SPORT_LABEL: Record<string, string> = {
 const sports = ['football', 'cricket', 'volleyball', 'athletics']
 
 export default function CompetitionsPage() {
+  const isMobile = useMobile()
   const [matches, setMatches] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<string>('all')
@@ -48,7 +50,7 @@ export default function CompetitionsPage() {
   return (
     <div style={{ minHeight: '100vh' }}>
       {/* Page header */}
-      <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: '40px 40px 32px' }}>
+      <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: isMobile ? '24px 16px 20px' : '40px 40px 32px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--accent)', marginBottom: 8 }}>BTSA</div>
           <h1 style={{ fontFamily: 'Bebas Neue', fontSize: 56, lineHeight: 0.95, marginBottom: 24 }}>ALLE COMPETITIES</h1>
@@ -74,7 +76,7 @@ export default function CompetitionsPage() {
       </div>
 
       {/* Matches */}
-      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '40px' }}>
+      <div style={{ maxWidth: 1000, margin: '0 auto', padding: isMobile ? '16px' : '40px' }}>
         {loading ? (
           <p style={{ color: 'var(--muted)' }}>Laden…</p>
         ) : filtered.length === 0 ? (
@@ -94,13 +96,13 @@ export default function CompetitionsPage() {
                   const sport = m.sport ?? m.tournaments?.sport ?? 'football'
                   return (
                     <div key={m.id} style={{
-                      display: 'grid', gridTemplateColumns: '120px 1fr auto 1fr 120px',
-                      alignItems: 'center', gap: 16, padding: '14px 20px',
+                      display: 'grid', gridTemplateColumns: isMobile ? '1fr auto 1fr' : '120px 1fr auto 1fr 120px',
+                      alignItems: 'center', gap: isMobile ? 8 : 16, padding: isMobile ? '12px' : '14px 20px',
                       background: m.is_live ? 'rgba(226,35,26,0.05)' : 'var(--bg2)',
                       border: `1px solid ${m.is_live ? 'rgba(226,35,26,0.2)' : 'var(--border)'}`,
                     }}>
                       {/* Sport badge + toernooi */}
-                      <div>
+                      {!isMobile && <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
                           {m.is_live && <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#E2231A', display: 'inline-block', animation: 'pulse 1s infinite' }} />}
                           <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, letterSpacing: 1, color: SPORT_COLOR[sport] ?? 'var(--accent)' }}>
@@ -110,7 +112,7 @@ export default function CompetitionsPage() {
                         <div style={{ fontSize: 10, color: 'var(--muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {m.tournaments?.name ?? '—'}
                         </div>
-                      </div>
+                      </div>}
 
                       {/* Thuisploeg */}
                       <div style={{ fontWeight: 600, fontSize: 14, textAlign: 'right' }}>{m.home_team_name}</div>
@@ -133,9 +135,9 @@ export default function CompetitionsPage() {
                       <div style={{ fontWeight: 600, fontSize: 14 }}>{m.away_team_name}</div>
 
                       {/* Ronde */}
-                      <div style={{ textAlign: 'right', fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 10, color: 'var(--muted)', letterSpacing: 0.5 }}>
+                      {!isMobile && <div style={{ textAlign: 'right', fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 10, color: 'var(--muted)', letterSpacing: 0.5 }}>
                         {m.round_label ?? m.round ?? '—'}
-                      </div>
+                      </div>}
                     </div>
                   )
                 })}

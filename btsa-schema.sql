@@ -490,6 +490,7 @@ CREATE POLICY "public_read" ON country_team_rankings        FOR SELECT USING (tr
 CREATE POLICY "public_read" ON global_team_rankings         FOR SELECT USING (true);
 CREATE POLICY "public_read" ON player_borrows               FOR SELECT USING (true);
 CREATE POLICY "public_read" ON athlete_registrations        FOR SELECT USING (true);
+CREATE POLICY "public_insert" ON athlete_registrations      FOR INSERT WITH CHECK (true);
 
 -- ── CLUB PORTAAL RECHTEN ──
 

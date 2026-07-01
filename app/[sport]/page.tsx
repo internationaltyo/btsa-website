@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useMobile } from '../hooks/useMobile'
 
 const SPORT_EMOJI: Record<string, string> = {
   football: '⚽', cricket: '🏏', volleyball: '🏐', athletics: '🏃',
@@ -30,12 +31,13 @@ export default function SportPage() {
     supabase.from('tournaments').select('id,name,start_date,status').eq('sport', sport).eq('is_published', true).order('start_date', { ascending: false }).limit(6).then(({ data }) => setTournaments(data ?? []))
   }, [sport])
 
+  const isMobile = useMobile()
   const label = sport.charAt(0).toUpperCase() + sport.slice(1)
 
   return (
     <div style={{ minHeight: '100vh' }}>
       {/* Nav */}
-      <nav style={{ background: '#000', padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, borderBottom: '1px solid var(--border)' }}>
+      <nav style={{ background: '#000', padding: isMobile ? '0 16px' : '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, borderBottom: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', paddingRight: 20, borderRight: '1px solid var(--border)' }}>
             <Image src="/btsa-logo.png" alt="BTSA" width={26} height={26} style={{ borderRadius: '50%' }} />
@@ -58,7 +60,7 @@ export default function SportPage() {
       </nav>
 
       {/* Page header */}
-      <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: '40px 40px 32px' }}>
+      <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: isMobile ? '24px 16px 20px' : '40px 40px 32px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div>
             <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--muted)', marginBottom: 8 }}>{num} — BTSA</div>
@@ -80,10 +82,10 @@ export default function SportPage() {
       </div>
 
       {/* Content */}
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 40px' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '16px' : '40px 40px' }}>
 
         {/* Two-column: clubs + matches */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: 1, background: 'var(--border)', marginBottom: 1 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.6fr', gap: 1, background: 'var(--border)', marginBottom: 1 }}>
           {/* Clubs */}
           <div style={{ background: 'var(--bg)', padding: '32px 28px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 20 }}>

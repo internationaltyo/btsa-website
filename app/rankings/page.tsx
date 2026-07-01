@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useMobile } from '../hooks/useMobile'
 
 const SPORTS = [
   { key: 'football',   label: 'Voetbal',    emoji: '⚽', color: '#E2231A' },
@@ -26,13 +27,14 @@ export default function RankingsPage() {
       .then(({ data }) => { setRows(data ?? []); setLoading(false) })
   }, [activeSport])
 
+  const isMobile = useMobile()
   const sport = SPORTS.find(s => s.key === activeSport)!
 
   return (
     <div style={{ minHeight: '100vh' }}>
 
       {/* Header */}
-      <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: '40px 40px 0' }}>
+      <div style={{ background: 'var(--bg2)', borderBottom: '1px solid var(--border)', padding: isMobile ? '24px 16px 0' : '40px 40px 0' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: 'var(--accent)', marginBottom: 8 }}>BTSA</div>
           <h1 style={{ fontFamily: 'Bebas Neue', fontSize: 56, lineHeight: 0.95, marginBottom: 32 }}>RANGLIJST</h1>
@@ -56,7 +58,7 @@ export default function RankingsPage() {
       </div>
 
       {/* Table */}
-      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '40px' }}>
+      <div style={{ maxWidth: 1000, margin: '0 auto', padding: isMobile ? '16px' : '40px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <div style={{ width: 4, height: 32, background: sport.color }} />
           <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 28, margin: 0 }}>
@@ -74,8 +76,8 @@ export default function RankingsPage() {
             </p>
           </div>
         ) : (
-          <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', overflow: 'hidden' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', overflow: 'hidden', overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: isMobile ? 500 : 'auto' }}>
               <thead>
                 <tr style={{ background: 'var(--bg3)', borderBottom: '2px solid var(--border)' }}>
                   {['#','Team','Club','G','W','D','V','GV','GT','+/-','Pts'].map(h => (
