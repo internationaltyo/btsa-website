@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const country = request.geo?.country
+  const country = request.headers.get('x-vercel-ip-country')
   const isLocalhost = request.headers.get('host')?.includes('localhost')
 
   // Allow local development + Belgian visitors
