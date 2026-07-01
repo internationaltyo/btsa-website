@@ -27,7 +27,7 @@ export default function SportPage() {
   useEffect(() => {
     supabase.from('clubs').select('id,name').eq('sport', sport).eq('is_active', true).order('name').then(({ data }) => setClubs(data ?? []))
     supabase.from('tournament_matches').select('id,home_team_name,away_team_name,home_score,away_score,is_live,is_played,match_date').eq('sport', sport).order('match_date', { ascending: false }).limit(5).then(({ data }) => setMatches(data ?? []))
-    supabase.from('tournaments').select('id,name,start_date,status').eq('sport', sport).eq('is_published', true).order('start_date', { ascending: false }).limit(6).then(({ data }) => setTournaments(data ?? []))
+    supabase.from('tournaments').select('id,name,start_date,status').eq('sport', sport).eq('is_published', true).order('start_date', { ascending: true }).then(({ data }) => setTournaments(data ?? []))
   }, [sport])
 
   const label = sport.charAt(0).toUpperCase() + sport.slice(1)
@@ -154,24 +154,45 @@ export default function SportPage() {
           {tournaments.length === 0 ? (
             <p style={{ color: 'var(--muted)', fontSize: 13, padding: '20px 24px' }}>Geen gepubliceerde toernooien.</p>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 0 }}>
-              {tournaments.map((t) => (
-                <Link key={t.id} href={`/${sport}/tournament/${t.id}`} style={{ textDecoration: 'none' }}>
-                  <div style={{
-                    padding: '18px 20px', borderRight: '1px solid var(--border)',
-                    borderBottom: '1px solid var(--border)',
-                    transition: 'background 0.15s', cursor: 'pointer',
-                  }}
-                    onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = 'var(--bg3)'}
-                    onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = 'transparent'}
-                  >
-                    <span className={`badge badge-${t.status === 'ongoing' ? 'green' : t.status === 'finished' ? 'gray' : 'blue'}`} style={{ marginBottom: 8, display: 'inline-block' }}>{t.status}</span>
-                    <div style={{ fontFamily: 'Bebas Neue', fontSize: 18, letterSpacing: 0.5, marginBottom: 4, lineHeight: 1.1 }}>{t.name}</div>
-                    <div style={{ color: 'var(--muted)', fontSize: 11, fontFamily: 'Rajdhani', fontWeight: 600, letterSpacing: 1 }}>{t.start_date}</div>
+            <>
+              {/* Aankomend / bezig */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 0 }}>
+                {tournaments.filter(t => t.status !== 'finished').map((t) => (
+                  <Link key={t.id} href={`/${sport}/tournament/${t.id}`} style={{ textDecoration: 'none' }}>
+                    <div style={{ padding: '18px 20px', borderRight: '1px solid var(--border)', borderBottom: '1px solid var(--border)', transition: 'background 0.15s', cursor: 'pointer' }}
+                      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = 'var(--bg3)'}
+                      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = 'transparent'}
+                    >
+                      <span className={`badge badge-${t.status === 'ongoing' ? 'green' : 'blue'}`} style={{ marginBottom: 8, display: 'inline-block' }}>{t.status}</span>
+                      <div style={{ fontFamily: 'Bebas Neue', fontSize: 18, letterSpacing: 0.5, marginBottom: 4, lineHeight: 1.1 }}>{t.name}</div>
+                      <div style={{ color: 'var(--muted)', fontSize: 11, fontFamily: 'Rajdhani', fontWeight: 600, letterSpacing: 1 }}>{t.start_date}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              {/* Afgelopen */}
+              {tournaments.some(t => t.status === 'finished') && (
+                <>
+                  <div style={{ padding: '12px 20px', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'rgba(255,255,255,0.02)' }}>
+                    <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 2, color: 'var(--muted)' }}>✓ AFGELOPEN TOERNOOIEN</span>
                   </div>
-                </Link>
-              ))}
-            </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 0 }}>
+                    {tournaments.filter(t => t.status === 'finished').map((t) => (
+                      <Link key={t.id} href={`/${sport}/tournament/${t.id}`} style={{ textDecoration: 'none' }}>
+                        <div style={{ padding: '18px 20px', borderRight: '1px solid var(--border)', borderBottom: '1px solid var(--border)', transition: 'background 0.15s', cursor: 'pointer', opacity: 0.75 }}
+                          onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = 'var(--bg3)'; (e.currentTarget as HTMLDivElement).style.opacity = '1' }}
+                          onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = 'transparent'; (e.currentTarget as HTMLDivElement).style.opacity = '0.75' }}
+                        >
+                          <span className="badge badge-gray" style={{ marginBottom: 8, display: 'inline-block' }}>✓ afgelopen</span>
+                          <div style={{ fontFamily: 'Bebas Neue', fontSize: 18, letterSpacing: 0.5, marginBottom: 4, lineHeight: 1.1 }}>{t.name}</div>
+                          <div style={{ color: 'var(--muted)', fontSize: 11, fontFamily: 'Rajdhani', fontWeight: 600, letterSpacing: 1 }}>{t.start_date}</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
           )}
         </div>
       </div>
