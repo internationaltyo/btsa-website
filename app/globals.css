@@ -237,6 +237,10 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   /* Calendar page */
   .cal-header { padding: 24px 16px 20px !important; }
   .cal-header h1 { font-size: 36px !important; }
-  .cal-grid { grid-template-columns: 1fr !important; padding: 16px !important; gap: 16px !important; }
-  .cal-cell { min-height: 52px !important; padding: 4px 3px !important; }
+  .cal-grid { grid-template-columns: 1fr !important; padding: 12px !important; gap: 12px !important; }
+  .cal-cell { min-height: 48px !important; padding: 4px 2px !important; }
+  .cal-event-label { display: none !important; }
+  .cal-event-dot { display: block !important; }
+  .cal-month-nav { padding: 14px 12px !important; }
+  .cal-month-nav .cal-month-title { font-size: 20px !important; }
 }

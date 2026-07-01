@@ -122,7 +122,7 @@ export default function CalendarPage() {
         <div>
           {/* Month navigation */}
           <div style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.07)' }}>
-            <div style={{ background: '#0D1128', padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div className="cal-month-nav" style={{ background: '#0D1128', padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <button onClick={prevMonth} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 36, height: 36, borderRadius: 6, cursor: 'pointer', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>‹</button>
               <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 28, color: '#fff', letterSpacing: 2 }}>
                 {MAANDEN[month]} {year}
@@ -169,13 +169,21 @@ export default function CalendarPage() {
                           color: isToday(day) ? '#fff' : '#374151', marginBottom: 4,
                         }}>{day}</div>
                         {ts.slice(0, 2).map(t => (
-                          <div key={t.id} style={{
-                            background: SPORT_COLOR[t.sport] ?? '#A50044',
-                            borderRadius: 3, padding: '2px 5px', marginBottom: 2,
-                            fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 10, color: '#fff',
-                            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                          }}>
-                            <SportIcon sport={t.sport} size={10} /> {t.name}
+                          <div key={t.id}>
+                            {/* Desktop: label */}
+                            <div className="cal-event-label" style={{
+                              background: SPORT_COLOR[t.sport] ?? '#A50044',
+                              borderRadius: 3, padding: '2px 5px', marginBottom: 2,
+                              fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 10, color: '#fff',
+                              whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                            }}>
+                              <SportIcon sport={t.sport} size={10} /> {t.name}
+                            </div>
+                            {/* Mobile: dot */}
+                            <div className="cal-event-dot" style={{
+                              display: 'none', width: 6, height: 6, borderRadius: '50%',
+                              background: SPORT_COLOR[t.sport] ?? '#A50044', marginBottom: 2,
+                            }} />
                           </div>
                         ))}
                         {ts.length > 2 && (
