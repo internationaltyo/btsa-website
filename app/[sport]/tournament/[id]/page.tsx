@@ -76,7 +76,7 @@ export default function TournamentPublicPage() {
       </div>
 
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #080c1a 0%, #0D1128 100%)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '40px 40px 32px' }}>
+      <div className="tourn-header" style={{ background: 'linear-gradient(135deg, #080c1a 0%, #0D1128 100%)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '40px 40px 32px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
           <div>
             <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: color, marginBottom: 10 }}>
@@ -100,7 +100,7 @@ export default function TournamentPublicPage() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 20px', display: 'grid', gridTemplateColumns: '1fr 300px', gap: 24 }}>
+      <div className="tourn-grid" style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 20px', display: 'grid', gridTemplateColumns: '1fr 300px', gap: 24 }}>
 
         {/* LEFT */}
         <div>
@@ -135,7 +135,7 @@ export default function TournamentPublicPage() {
                     const homeWon = m.is_played && m.home_score > m.away_score
                     const awayWon = m.is_played && m.away_score > m.home_score
                     return (
-                      <div key={m.id} style={{ display: 'grid', gridTemplateColumns: '52px 1fr 80px 1fr', alignItems: 'center', gap: 8, padding: '13px 20px', borderBottom: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                      <div key={m.id} className="tourn-match-grid" style={{ display: 'grid', gridTemplateColumns: '52px 1fr 80px 1fr', alignItems: 'center', gap: 8, padding: '13px 20px', borderBottom: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
                         <span style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{m.match_time ?? ''}</span>
                         <span style={{ fontWeight: homeWon ? 700 : 400, fontSize: 14, textAlign: 'right', color: homeWon ? '#fff' : 'rgba(255,255,255,0.6)' }}>{m.home_team_name}</span>
                         <span style={{ fontFamily: 'Bebas Neue', fontSize: 22, color: m.is_played ? '#fff' : 'rgba(255,255,255,0.3)', textAlign: 'center' }}>

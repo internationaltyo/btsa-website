@@ -52,7 +52,7 @@ export default function TeamsPage() {
       </div>
 
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #080c1a 0%, #0D1128 100%)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '40px 40px 32px' }}>
+      <div className="teams-header" style={{ background: 'linear-gradient(135deg, #080c1a 0%, #0D1128 100%)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '40px 40px 32px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, letterSpacing: 3, color, marginBottom: 10 }}>
             {label.toUpperCase()} · BTSA
@@ -67,7 +67,7 @@ export default function TeamsPage() {
       </div>
 
       {/* Clubs grid */}
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 20px' }}>
+      <div className="teams-content" style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 20px' }}>
         {loading ? (
           <p style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Rajdhani', fontWeight: 600 }}>Laden…</p>
         ) : clubs.length === 0 ? (
@@ -105,7 +105,7 @@ export default function TeamsPage() {
                       {clubMembers.length === 0 ? (
                         <p style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 13 }}>Nog geen spelers ingeschreven.</p>
                       ) : (
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10 }}>
+                        <div className="players-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10 }}>
                           {clubMembers.map(m => (
                             <div key={m.id} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 8, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12 }}>
                               {/* Jersey number */}

@@ -220,4 +220,23 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   .rankings-header { padding: 20px 16px 0 !important; }
   .rankings-content { padding: 16px !important; }
   .rankings-tabs button { padding: 10px 14px !important; font-size: 12px !important; }
+
+  /* Tournament detail page */
+  .tourn-header { padding: 24px 16px 20px !important; }
+  .tourn-header h1 { font-size: 36px !important; }
+  .tourn-grid { grid-template-columns: 1fr !important; padding: 16px !important; gap: 16px !important; }
+  .tourn-breadcrumb { padding: 0 16px !important; }
+  .tourn-match-grid { grid-template-columns: 44px 1fr 64px 1fr !important; }
+
+  /* Teams / clubs page */
+  .teams-header { padding: 24px 16px 20px !important; }
+  .teams-header h1 { font-size: 36px !important; }
+  .teams-content { padding: 16px !important; }
+  .players-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Calendar page */
+  .cal-header { padding: 24px 16px 20px !important; }
+  .cal-header h1 { font-size: 36px !important; }
+  .cal-grid { grid-template-columns: 1fr !important; padding: 16px !important; gap: 16px !important; }
+  .cal-cell { min-height: 52px !important; padding: 4px 3px !important; }
 }

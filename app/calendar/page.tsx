@@ -102,7 +102,7 @@ export default function CalendarPage() {
     <div style={{ minHeight: '100vh', background: '#F4F5F7' }}>
 
       {/* Header */}
-      <div style={{ background: '#0D1128', borderBottom: '4px solid #A50044', padding: '40px 40px 32px' }}>
+      <div className="cal-header" style={{ background: '#0D1128', borderBottom: '4px solid #A50044', padding: '40px 40px 32px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: '#F5A623', marginBottom: 8 }}>
             BELGIUM TAMIL SPORTS ASSOCIATION
@@ -116,7 +116,7 @@ export default function CalendarPage() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 20px', display: 'grid', gridTemplateColumns: '1fr 320px', gap: 32 }}>
+      <div className="cal-grid" style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 20px', display: 'grid', gridTemplateColumns: '1fr 320px', gap: 32 }}>
 
         {/* ── CALENDAR ── */}
         <div>
@@ -145,10 +145,12 @@ export default function CalendarPage() {
                 return (
                   <div
                     key={idx}
+                    className="cal-cell"
                     onClick={() => day && handleDayClick(day)}
                     style={{
                       minHeight: 80,
                       padding: '8px 6px',
+                      // cal-cell applied via className below
                       borderRight: (idx + 1) % 7 !== 0 ? '1px solid #F0F0F0' : 'none',
                       borderBottom: '1px solid #F0F0F0',
                       cursor: day ? 'pointer' : 'default',
