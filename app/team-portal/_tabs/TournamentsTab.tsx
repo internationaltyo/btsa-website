@@ -28,6 +28,8 @@ export default function TournamentsTab({ account, club }: { account: TeamAccount
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([])
   const [appliedTeams, setAppliedTeams] = useState<Record<string, { status: string; team_id: string; app_id: string }[]>>({})
   const [borrowRequests, setBorrowRequests] = useState<any[]>([])
+  const [dateConflict, setDateConflict] = useState<{ type: 'blocked' | 'warning'; message: string } | null>(null)
+  const [dateWarningConfirmed, setDateWarningConfirmed] = useState(false)
 
   async function load() {
     const [mine, all, teams, members] = await Promise.all([
@@ -64,8 +66,42 @@ export default function TournamentsTab({ account, club }: { account: TeamAccount
 
   useEffect(() => { load() }, [club.id])
 
-  async function createTournament() {
+  async function checkDateConflicts(skipWarning = false): Promise<boolean> {
+    if (!createForm.start_date) return true
+    const newDate = new Date(createForm.start_date)
+    const { data: existing } = await supabase
+      .from('tournaments')
+      .select('id, name, start_date, organizer_club_id')
+      .eq('is_published', true)
+    const others = (existing ?? []).filter((t: any) => t.organizer_club_id !== club.id)
+
+    for (const t of others) {
+      const tDate = new Date(t.start_date)
+      const diffDays = Math.abs((newDate.getTime() - tDate.getTime()) / (1000 * 60 * 60 * 24))
+      if (diffDays === 0) {
+        setDateConflict({
+          type: 'blocked',
+          message: `❌ Op ${createForm.start_date} organiseert "${t.name}" al een toernooi. Je kan geen toernooi op dezelfde dag organiseren.`,
+        })
+        return false
+      }
+      if (!skipWarning && diffDays <= 7) {
+        const direction = newDate > tDate ? 'na' : 'voor'
+        setDateConflict({
+          type: 'warning',
+          message: `⚠️ Een week ${direction} jouw datum organiseert "${t.name}" een toernooi (${t.start_date}). Je kan doorgaan, maar bespreek dit eerst met het BTSA bestuur.`,
+        })
+        return false
+      }
+    }
+    return true
+  }
+
+  async function createTournament(force = false) {
     if (!createForm.name || !createForm.start_date) return
+    const ok = await checkDateConflicts(force)
+    if (!ok) return
+    setDateConflict(null)
     const { error } = await supabase.from('tournaments').insert({
       organizer_club_id: club.id,
       country_id: account.country_id,
@@ -190,9 +226,40 @@ export default function TournamentsTab({ account, club }: { account: TeamAccount
             <div><label>Max teams</label><input type="number" value={createForm.max_teams} onChange={e => setCreateForm(p => ({ ...p, max_teams: Number(e.target.value) }))} /></div>
             <div style={{ gridColumn: '1 / -1' }}><label>Beschrijving</label><textarea value={createForm.description} onChange={e => setCreateForm(p => ({ ...p, description: e.target.value }))} rows={2} /></div>
           </div>
+          {/* Date conflict feedback */}
+          {dateConflict && (
+            <div style={{
+              marginTop: 12, padding: '14px 16px', borderRadius: 6,
+              background: dateConflict.type === 'blocked' ? '#FEF2F2' : '#FFFBEB',
+              border: `1px solid ${dateConflict.type === 'blocked' ? '#FCA5A5' : '#FCD34D'}`,
+              fontFamily: 'Rajdhani, sans-serif', fontWeight: 600, fontSize: 14,
+              color: dateConflict.type === 'blocked' ? '#991B1B' : '#92400E',
+            }}>
+              {dateConflict.message}
+              {dateConflict.type === 'warning' && (
+                <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
+                  <button
+                    className="btn-primary"
+                    onClick={() => createTournament(true)}
+                    style={{ fontSize: 12, padding: '6px 14px' }}
+                  >
+                    Toch aanmaken
+                  </button>
+                  <button
+                    className="btn-ghost"
+                    onClick={() => setDateConflict(null)}
+                    style={{ fontSize: 12, padding: '6px 14px' }}
+                  >
+                    Andere datum kiezen
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
           <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-            <button className="btn-primary" onClick={createTournament}>Aanmaken</button>
-            <button className="btn-ghost" onClick={() => setShowCreate(false)}>Annuleren</button>
+            <button className="btn-primary" onClick={() => { setDateConflict(null); createTournament(false) }}>Aanmaken</button>
+            <button className="btn-ghost" onClick={() => { setShowCreate(false); setDateConflict(null) }}>Annuleren</button>
           </div>
         </div>
       )}

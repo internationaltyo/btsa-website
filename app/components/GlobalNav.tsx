@@ -10,6 +10,7 @@ const NAV_LEFT = [
   { label: 'ATLETIEK',   href: '/athletics' },
 ]
 const NAV_RIGHT = [
+  { label: 'KALENDER',    href: '/calendar' },
   { label: 'RANGLIJST',   href: '/rankings' },
   { label: 'ORGANISATIE', href: '/organisatie' },
   { label: 'CLUBS',       href: '/football/teams' },
