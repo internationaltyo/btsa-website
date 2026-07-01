@@ -13,6 +13,7 @@ const NAV_RIGHT = [
   { label: 'KALENDER',    href: '/calendar' },
   { label: 'RANGLIJST',   href: '/rankings' },
   { label: 'ORGANISATIE', href: '/organisatie' },
+  { label: 'SPONSORS',    href: '/sponsors' },
   { label: 'CLUBS',       href: '/football/teams' },
   { label: 'ADMIN',       href: '/admin' },
 ]
