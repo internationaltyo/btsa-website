@@ -58,7 +58,7 @@ export default function HomePage() {
       <div style={{ position: 'relative', borderBottom: '1px solid #1e3048', overflow: 'hidden' }}>
         {/* Gouden gloed rechts */}
         <div style={{ position: 'absolute', right: 0, top: 0, width: '50%', height: '100%', background: 'radial-gradient(ellipse at right center, rgba(245,166,35,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '40px 20px' : '72px 40px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 400px', gap: isMobile ? 32 : 60, alignItems: 'center' }}>
+        <div className="hero-grid" style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 40px', display: 'grid', gridTemplateColumns: '1fr 400px', gap: 60, alignItems: 'center' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
               <div style={{ width: 32, height: 3, background: 'var(--accent)' }} />
@@ -87,7 +87,7 @@ export default function HomePage() {
             </div>
           </div>
           {/* Right side: logo + quick stats */}
-          <div style={{ display: isMobile ? 'none' : 'flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
+          <div className="hero-stats" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
             <Image src="/btsa-logo.png" alt="BTSA" width={220} height={220} style={{ borderRadius: '50%', filter: 'drop-shadow(0 0 48px rgba(245,166,35,0.2))' }} />
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: '#1a1a1a', width: '100%' }}>
               {[['4', 'SPORTEN'], ['—', 'CLUBS'], ['—', 'SPELERS'], ['—', 'MATCHES']].map(([n, l]) => (
@@ -103,7 +103,7 @@ export default function HomePage() {
 
       {/* ── SPORT TILES ── */}
       <div style={{ borderBottom: '1px solid #1e3048', background: 'rgba(0,0,0,0.25)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '0' : '0 40px', display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 0 }}>
+        <div className="sports-grid" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
           {sports.map((s, i) => (
             <Link key={s.slug} href={`/${s.slug}`} style={{ textDecoration: 'none' }}>
               <div style={{
@@ -141,7 +141,7 @@ export default function HomePage() {
           {/* Gouden gloed links */}
           <div style={{ position: 'absolute', left: 0, top: 0, width: '60%', height: '100%', background: 'radial-gradient(ellipse at left center, rgba(245,166,35,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
           {/* Content */}
-          <div style={{ position: 'relative', padding: isMobile ? '32px 24px' : '48px 56px', maxWidth: 600 }}>
+          <div className="membership-inner" style={{ position: 'relative', padding: '48px 56px', maxWidth: 600 }}>
             <h2 style={{
               fontFamily: 'Bebas Neue', fontSize: 42, letterSpacing: 1, lineHeight: 1,
               marginBottom: 14,
@@ -165,7 +165,7 @@ export default function HomePage() {
             </Link>
           </div>
           {/* Logo rechts (zichtbaar) */}
-          <div style={{ position: 'absolute', right: 48, top: '50%', transform: 'translateY(-50%)', display: isMobile ? 'none' : 'block' }}>
+          <div className="membership-logo" style={{ position: 'absolute', right: 48, top: '50%', transform: 'translateY(-50%)' }}>
             <Image src="/btsa-logo.png" alt="BTSA" width={140} height={140} style={{ borderRadius: '50%', opacity: 0.7, filter: 'drop-shadow(0 0 24px rgba(245,166,35,0.3))' }} />
           </div>
         </div>
@@ -173,8 +173,8 @@ export default function HomePage() {
       </div>
 
       {/* ── TROPHIES (100% Barcelona stijl) ── */}
-      <div style={{ background: '#0D1128', padding: isMobile ? '24px 16px' : '40px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: isMobile ? 8 : 16 }}>
+      <div className="trophies-section" style={{ background: '#0D1128', padding: '40px' }}>
+        <div className="trophies-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
           {[
             { label: 'Maveerar Cup',   number: '—', unit: 'BTSA' },
             { label: 'Ilampuyal Cup',  number: '—', unit: 'BTSA' },
@@ -329,7 +329,7 @@ export default function HomePage() {
       </div>
 
       {/* ── MAIN CONTENT: News feed + Sidebar ── */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '24px 16px' : '48px 40px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 340px', gap: isMobile ? 32 : 40 }}>
+      <div className="main-grid" style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 40px', display: 'grid', gridTemplateColumns: '1fr 340px', gap: 40 }}>
 
         {/* LEFT: Matches feed */}
         <div>
@@ -362,14 +362,14 @@ export default function HomePage() {
           ) : (
             <div>
               {matches.map((m, i) => (
-                <div key={m.id} style={{
-                  display: 'grid', gridTemplateColumns: isMobile ? '1fr auto 1fr' : '80px 1fr auto 1fr 100px',
+                <div key={m.id} className="match-row" style={{
+                  display: 'grid', gridTemplateColumns: '80px 1fr auto 1fr 100px',
                   alignItems: 'center', gap: 16, padding: '16px 0',
                   borderBottom: i < matches.length - 1 ? '1px solid #1a1a1a' : 'none',
                 }}>
-                  {!isMobile && <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, letterSpacing: 1, color: '#444' }}>
+                  <div className="match-date" style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, letterSpacing: 1, color: '#444' }}>
                     {m.match_date ?? 'TBD'}
-                  </div>}
+                  </div>
                   <div style={{ fontSize: 14, fontWeight: 600, textAlign: 'right' }}>{m.home_team_name}</div>
                   <div style={{ textAlign: 'center', minWidth: 80 }}>
                     {m.is_live ? (
@@ -381,14 +381,14 @@ export default function HomePage() {
                     )}
                   </div>
                   <div style={{ fontSize: 14, fontWeight: 600 }}>{m.away_team_name}</div>
-                  {!isMobile && <div style={{ textAlign: 'right' }}>
+                  <div className="match-status" style={{ textAlign: 'right' }}>
                     {m.is_live
                       ? <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: 'var(--red)', letterSpacing: 1 }}>● LIVE</span>
                       : m.is_played
                         ? <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: '#444', letterSpacing: 1 }}>GESPEELD</span>
                         : <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 10, color: 'var(--accent)', letterSpacing: 1 }}>GEPLAND</span>
                     }
-                  </div>}
+                  </div>
                 </div>
               ))}
             </div>
@@ -466,8 +466,8 @@ export default function HomePage() {
       )}
 
       {/* ── FOOTER ── */}
-      <footer style={{ background: '#000', borderTop: '1px solid #1a1a1a', padding: isMobile ? '32px 16px' : '40px', marginTop: 'auto' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : '1fr 1fr 1fr 1fr', gap: isMobile ? 24 : 40 }}>
+      <footer className="footer-outer" style={{ background: '#000', borderTop: '1px solid #1a1a1a', padding: '40px', marginTop: 'auto' }}>
+        <div className="footer-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 40 }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
               <Image src="/btsa-logo.png" alt="BTSA" width={32} height={32} style={{ borderRadius: '50%' }} />
