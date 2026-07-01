@@ -221,6 +221,13 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   .rankings-content { padding: 16px !important; }
   .rankings-tabs button { padding: 10px 14px !important; font-size: 12px !important; }
 
+  /* Sponsors page */
+  .sponsors-header { padding: 32px 16px 24px !important; }
+  .sponsors-header h1 { font-size: 44px !important; }
+  .sponsors-grid { grid-template-columns: 1fr !important; }
+  .sponsors-logos { gap: 12px !important; }
+  .sponsors-cta { padding: 32px 20px !important; }
+
   /* Tournament detail page */
   .tourn-header { padding: 24px 16px 20px !important; }
   .tourn-header h1 { font-size: 36px !important; }

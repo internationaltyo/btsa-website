@@ -42,7 +42,7 @@ export default function SponsorsPage() {
     <div style={{ minHeight: '100vh', background: '#0D1128', color: '#fff' }}>
 
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #080c1a 0%, #0D1128 100%)', borderBottom: '4px solid #F5A623', padding: '56px 40px 40px' }}>
+      <div className="sponsors-header" style={{ background: 'linear-gradient(135deg, #080c1a 0%, #0D1128 100%)', borderBottom: '4px solid #F5A623', padding: '56px 40px 40px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: 11, letterSpacing: 3, color: '#F5A623', marginBottom: 10 }}>
             BELGIUM TAMIL SPORTS ASSOCIATION
@@ -64,7 +64,7 @@ export default function SponsorsPage() {
         </div>
 
         {/* Placeholder sponsor logos */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24, marginBottom: 80 }}>
+        <div className="sponsors-logos" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24, marginBottom: 80 }}>
           {['Goud sponsor', 'Goud sponsor', 'Zilver sponsor', 'Zilver sponsor', 'Zilver sponsor', 'Brons sponsor', 'Brons sponsor'].map((t, i) => (
             <div key={i} style={{
               width: i < 2 ? 220 : i < 5 ? 180 : 150,
@@ -87,7 +87,7 @@ export default function SponsorsPage() {
           <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 40, color: '#fff', letterSpacing: 1, margin: 0 }}>SPONSOR PAKKETTEN</h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginBottom: 80 }}>
+        <div className="sponsors-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginBottom: 80 }}>
           {TIERS.map((tier, i) => (
             <div key={tier.name} style={{
               background: 'rgba(255,255,255,0.04)',
@@ -116,7 +116,7 @@ export default function SponsorsPage() {
         </div>
 
         {/* CTA */}
-        <div style={{ background: 'rgba(245,166,35,0.07)', border: '1px solid rgba(245,166,35,0.2)', borderRadius: 16, padding: '48px 40px', textAlign: 'center', marginBottom: 80 }}>
+        <div className="sponsors-cta" style={{ background: 'rgba(245,166,35,0.07)', border: '1px solid rgba(245,166,35,0.2)', borderRadius: 16, padding: '48px 40px', textAlign: 'center', marginBottom: 80 }}>
           <h3 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, color: '#fff', letterSpacing: 1, margin: '0 0 12px' }}>
             INTERESSE OM SPONSOR TE WORDEN?
           </h3>
