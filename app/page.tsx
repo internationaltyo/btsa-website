@@ -27,6 +27,9 @@ export default function HomePage() {
   const [tournaments, setTournaments] = useState<any[]>([])
   const [clubs, setClubs] = useState<any[]>([])
   const [activeNav, setActiveNav] = useState<string | null>(null)
+  const [clubCount, setClubCount] = useState<number | null>(null)
+  const [playerCount, setPlayerCount] = useState<number | null>(null)
+  const [matchCount, setMatchCount] = useState<number | null>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
   const photosRef = useRef<HTMLDivElement>(null)
 
@@ -40,6 +43,9 @@ export default function HomePage() {
     supabase.from('tournament_matches').select('*').order('match_date', { ascending: false }).limit(8).then(({ data }) => setMatches(data ?? []))
     supabase.from('tournaments').select('*, clubs!organizer_club_id(name)').eq('is_published', true).order('start_date', { ascending: false }).limit(8).then(({ data }) => setTournaments(data ?? []))
     supabase.from('clubs').select('id,name,sport').eq('is_active', true).order('name').limit(12).then(({ data }) => setClubs(data ?? []))
+    supabase.from('clubs').select('id', { count: 'exact', head: true }).eq('is_active', true).neq('sport', 'tcc').then(({ count }) => setClubCount(count ?? 0))
+    supabase.from('club_members').select('id', { count: 'exact', head: true }).eq('is_active', true).then(({ count }) => setPlayerCount(count ?? 0))
+    supabase.from('tournament_matches').select('id', { count: 'exact', head: true }).eq('is_played', true).then(({ count }) => setMatchCount(count ?? 0))
   }, [])
 
   const isMobile = useMobile()
@@ -90,7 +96,7 @@ export default function HomePage() {
           <div className="hero-stats" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
             <Image src="/btsa-logo.png" alt="BTSA" width={220} height={220} style={{ borderRadius: '50%', filter: 'drop-shadow(0 0 48px rgba(245,166,35,0.2))' }} />
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: '#1a1a1a', width: '100%' }}>
-              {[['4', 'SPORTEN'], ['—', 'CLUBS'], ['—', 'SPELERS'], ['—', 'MATCHES']].map(([n, l]) => (
+              {[['4', 'SPORTEN'], [clubCount?.toString() ?? '—', 'CLUBS'], [playerCount?.toString() ?? '—', 'SPELERS'], [matchCount?.toString() ?? '—', 'MATCHES']].map(([n, l]) => (
                 <div key={l} style={{ background: '#111', padding: '16px 20px' }}>
                   <div style={{ fontFamily: 'Bebas Neue', fontSize: 30, color: 'var(--accent)', lineHeight: 1 }}>{n}</div>
                   <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: 10, letterSpacing: 1.5, color: '#555', marginTop: 3 }}>{l}</div>
